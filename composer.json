@@ -1,0 +1,33 @@
+{
+    "name": "ipsum3/admin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "B1nj",
+            "email": "postmaster@b1nj.fr"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "glhd/aire": "^1.5",
+        "ipsum3/admin-assets": "dev-master@dev"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "git@github.com:ipsum3/admin-assets.git"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Ipsum\\Admin\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ipsum\\Admin\\AdminServiceProvider"
+            ]
+        }
+    }
+}

@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
 
-        <title>{{ __('IpsumAdmin::auth.Connexion administration') }}</title>
+        <title>@yield('title', __('IpsumAdmin::auth.Connexion administration'))</title>
 
         <!-- Optional CDN -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,700" rel="stylesheet">
@@ -17,4 +17,6 @@
     <body class="l-single bg-gray">
         @yield('content')
     </body>
+
+    <script src="{{ asset('ipsum/admin/dist/main.js') }}"></script>
 </html>

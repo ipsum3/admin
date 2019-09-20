@@ -4,8 +4,8 @@
         @if (!empty($group['title']))
             <div class="menu-title">{{ $group['title'] }}</div>
         @endif
-        @foreach($group['sections'] as $section_key => $section)
-            <ul class="menu-section">
+        <ul class="menu-section">
+            @foreach($group['sections'] as $section_key => $section)
                 <li>
                     @if (!isset($section['submenus']))
                         <a class="menu-link {{ request()->is(config('ipsum.admin.route_prefix').$section['url_prefix']) ? 'active' : '' }}" href="{{ !empty($section['route']) ? route($section['route'][0], (isset($section['route'][1]) ? $section['route'][1] : null)) : url($section['url']) }}">
@@ -45,8 +45,8 @@
                         </ul>
                     @endif
                 </li>
-            </ul>
-        @endforeach
+            @endforeach
+        </ul>
     @endforeach
 
 </nav>

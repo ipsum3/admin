@@ -38,7 +38,7 @@
                         <td class="text-right">
                             @can('delete', $admin)
                             <form action="{{ route('adminUser.destroy',$admin->id) }}" method="POST">
-                                <a class="btn btn-primary" href="{{ route('adminUser.edit',$admin->id) }}"><i class="fa fa-pen"></i> Edit</a>
+                                <a class="btn btn-primary" href="{{ route('adminUser.edit',$admin->id) }}"><i class="fa fa-edit"></i> Edit</a>
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger"><i class="fa fa-trash-alt"></i> Delete</button>

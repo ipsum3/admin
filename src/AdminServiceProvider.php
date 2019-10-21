@@ -170,6 +170,12 @@ class AdminServiceProvider extends ServiceProvider
             __DIR__.'/config/ipsum/admin.php', 'ipsum.admin'
         );
 
+        if (! app()->configurationIsCached()) {
+            $this->app['config']->set('aire', array_merge(
+                app()['config']->get('aire', []), require __DIR__.'/config/ipsum/aire.php'
+            ));
+        }
+
         // register the artisan commands
         $this->commands($this->commands);
     }

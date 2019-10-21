@@ -25,7 +25,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Rôle</th>
-                        <th width="200px">Actions</th>
+                        <th width="240px">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,10 +38,10 @@
                         <td class="text-right">
                             @can('delete', $admin)
                             <form action="{{ route('adminUser.destroy',$admin->id) }}" method="POST">
-                                <a class="btn btn-primary" href="{{ route('adminUser.edit',$admin->id) }}"><i class="fa fa-edit"></i> Edit</a>
+                                <a class="btn btn-primary" href="{{ route('adminUser.edit',$admin->id) }}"><i class="fa fa-edit"></i> Modifier</a>
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash-alt"></i> Delete</button>
+                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash-alt"></i> Supprimer</button>
                             </form>
                             @endcan
                         </td>

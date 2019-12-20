@@ -18,7 +18,9 @@ trait Htmlable
             }
 
             foreach ($objet->htmlable as $champ) {
-                $objet->$champ = Security::clean($objet->$champ);
+                if ($objet->$champ !== null) {
+                    $objet->$champ = Security::clean($objet->$champ);
+                }
             }
         });
 

@@ -10,7 +10,8 @@
     "minimum-stability": "stable",
     "require": {
         "glhd/aire": "^1.7",
-        "ipsum3/admin-assets": "dev-master@dev"
+        "ipsum3/admin-assets": "dev-master@dev",
+        "graham-campbell/security": "^7.0"
     },
     "repositories": [
         {

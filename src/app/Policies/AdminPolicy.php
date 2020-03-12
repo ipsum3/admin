@@ -12,7 +12,7 @@ class AdminPolicy
 
     public function before(Admin $user, $ability)
     {
-        if ($user->isSuperAdmin()) {
+        if ($user->isSuperAdmin() and $ability != 'delete') {
             return true;
         }
     }
@@ -45,7 +45,7 @@ class AdminPolicy
 
     public function delete(Admin $user, Admin $model)
     {
-        if ($user->isAdmin() and !$model->isSuperAdmin()) {
+        if ($user->isAdmin() and !$model->isSuperAdmin() and $model->id != $user->id) {
             return true;
         }
     }

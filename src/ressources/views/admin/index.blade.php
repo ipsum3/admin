@@ -36,12 +36,14 @@
                         <td>{{ $admin->email }}</td>
                         <td>{{ $admin->roleToString }}</td>
                         <td class="text-right">
-                            @can('delete', $admin)
+                            @can('update', $admin)
                             <form action="{{ route('adminUser.destroy',$admin->id) }}" method="POST">
                                 <a class="btn btn-primary" href="{{ route('adminUser.edit',$admin->id) }}"><i class="fa fa-edit"></i> Modifier</a>
+                                @can('delete', $admin)
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger"><i class="fa fa-trash-alt"></i> Supprimer</button>
+                                @endcan
                             </form>
                             @endcan
                         </td>

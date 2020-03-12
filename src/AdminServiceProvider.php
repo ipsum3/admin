@@ -79,7 +79,12 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::before(function ($user, $ability) {
+        Gate::before(function ($user, $ability, $models) {
+            foreach ($models as $model) {
+                if ($model[0] != Admin::class or (is_object($model[0]) and get_class($model[0]) != Admin::class)) {
+                    return null;
+                }
+            }
             if ($user->isSuperAdmin()) {
                 return true;
             }

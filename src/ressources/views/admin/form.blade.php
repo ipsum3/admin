@@ -19,7 +19,11 @@
                 {{ Aire::email('email', 'Email*')->groupClass('form-group col-md-6') }}
                 {{ Aire::password('password', 'Password')->value('')->groupClass('form-group col-md-6')->autocomplete('new-password') }}
             </div>
-            {{ Aire::select($roles, 'role', 'Rôle*') }}
+            <div class="form-row">
+                {{ Aire::select($roles, 'role', 'Rôle*')->groupClass('form-group col-md-6') }}
+                <input type="hidden" name="acces" value="">{{-- Pour gérer le cas du select multiple vide --}}
+                {{ Aire::select($acces, 'acces', 'Accés')->groupClass('form-group col-md-6')->setAttribute('multiple', 'multiple')->addClass('js-example-basic-single js-states')->data('tags', 'true') }}
+            </div>
         </div>
         <div class="box-footer">
             <div><button class="btn btn-outline-secondary" type="reset">Annuler</button></div>

@@ -21,7 +21,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'firstname', 'email', 'password', 'role',
+        'name', 'firstname', 'email', 'password', 'role', 'acces',
     ];
 
     /**
@@ -84,18 +84,37 @@ class Admin extends Authenticatable
      *
      * @return array
      */
-    public function acces()
+    public function getAccesAttribute()
     {
-        return unserialize($this->acces);
+        return unserialize($this->attributes['acces']);
     }
+    public function setAccesAttribute($acces)
+    {
+        $this->attributes['acces'] = $acces ? serialize($acces) : null;
+    }
+
     /**
      * Retourne les zones d'accès de l'utilisateur
      *
      * @return string
      */
-    public function accesToString()
+    public function getAccesToStringAttribute()
     {
-        return explode(', ', $this->acces());
+        return is_array($this->acces) ? implode(', ', $this->acces) : '';
+    }
+
+    /**
+     * Vérifie l'accés de l'utilisateur
+     *
+     * @param string $acces
+     * @return bool
+     */
+    public function hasAcces($acces)
+    {
+        return empty($acces)
+            or ($this->acces and in_array($acces, $this->acces))
+            or ($this->isAdmin())
+            or $this->isSuperAdmin();
     }
 
     

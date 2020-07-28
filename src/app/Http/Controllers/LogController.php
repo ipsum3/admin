@@ -14,7 +14,7 @@ class LogController extends AdminController
      */
     public function index()
     {
-        if (Gate::denies('show-logsq')) {
+        if (Gate::denies('show-logs')) {
             abort('403');
         }
 

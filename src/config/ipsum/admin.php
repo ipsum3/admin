@@ -20,4 +20,11 @@ return [
         '3' => 'Éditeur',
     ),
 
+
+    'acces' => array(
+        'article' => 'Article',
+        'media' => 'Médias',
+        'parametres' => 'Paramètres',
+    ),
+
 ];

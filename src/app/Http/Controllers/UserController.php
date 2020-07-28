@@ -27,8 +27,10 @@ class UserController extends AdminController
             unset($roles[Admin::SUPERADMIN]);
         }
 
+        $acces = config('ipsum.admin.acces');
+
         $admin = new Admin;
-        return view('IpsumAdmin::admin.form', compact('admin', 'roles'));
+        return view('IpsumAdmin::admin.form', compact('admin', 'roles', 'acces'));
     }
 
     public function store(StoreAdmin $request)
@@ -54,7 +56,9 @@ class UserController extends AdminController
             unset($roles[Admin::SUPERADMIN]);
         }
 
-        return view('IpsumAdmin::admin.form', compact('admin', 'roles'));
+        $acces = config('ipsum.admin.acces');
+
+        return view('IpsumAdmin::admin.form', compact('admin', 'roles', 'acces'));
     }
 
     public function update(StoreAdmin $request, Admin $admin)

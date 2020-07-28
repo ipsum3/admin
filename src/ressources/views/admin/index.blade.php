@@ -25,6 +25,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Rôle</th>
+                        <th>Accès</th>
                         <th width="240px">Actions</th>
                     </tr>
                 </thead>
@@ -35,6 +36,7 @@
                         <td>{{ $admin->name }}</td>
                         <td>{{ $admin->email }}</td>
                         <td>{{ $admin->roleToString }}</td>
+                        <td>{{ $admin->accesToString }}</td>
                         <td class="text-right">
                             @can('update', $admin)
                             <form action="{{ route('adminUser.destroy',$admin->id) }}" method="POST">

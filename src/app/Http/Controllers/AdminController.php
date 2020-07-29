@@ -2,11 +2,14 @@
 
 namespace Ipsum\Admin\app\Http\Controllers;
 
+use Gate;
 
 
 class AdminController extends Controller
 {
     protected $data = []; // the information we send to the view
+
+    protected $acces;
 
     /**
      * Create a new controller instance.
@@ -15,6 +18,14 @@ class AdminController extends Controller
     {
         parent::__construct();
         $this->middleware('admin');
+        if ($this->acces !== null) {
+            // Pas de session dans le constructeur
+            // https://laravel-news.com/controller-construct-session-changes-in-laravel-5-3
+            $this->middleware(function ($request, $next) {
+                $this->authorize('admin-acces', $this->acces);
+                return $next($request);
+            });
+        }
     }
 
     /**

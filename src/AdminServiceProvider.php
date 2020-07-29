@@ -95,6 +95,9 @@ class AdminServiceProvider extends ServiceProvider
         Gate::define('show-settings', function ($user) {
             return true;
         });
+        Gate::define('admin-acces', function ($user, $acces) {
+            return $user->hasAcces($acces);
+        });
 
     }
 

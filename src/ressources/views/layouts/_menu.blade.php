@@ -14,11 +14,13 @@
                         </a>
                     @else
                         @php
+                        // TODO mettre la logique dans une class menu singleton ?
                         $urls_prefix = [];
                         foreach($section['submenus'] as $submenu_key => $submenu) {
                             if (!empty($submenu['url_prefix'])) {
                                 $urls_prefix[] = config('ipsum.admin.route_prefix').$submenu['url_prefix'];
                             }
+                            // Gate inutile car tous peut être géré par can
                             if ((!empty($submenu['gate']) and !Gate::allows($submenu['gate'])) or (!empty($submenu['can']) and !auth()->user()->can($submenu['can'][0], $submenu['can'][1]))) {
                                 unset($section['submenus'][$submenu_key]);
                             }

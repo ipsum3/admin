@@ -4,6 +4,7 @@ namespace Ipsum\Admin\Concerns;
 
 
 use GrahamCampbell\Security\Facades\Security;
+use voku\helper\AntiXSS;
 
 trait Htmlable
 {
@@ -19,7 +20,13 @@ trait Htmlable
 
             foreach ($objet->htmlable as $champ) {
                 if ($objet->$champ !== null) {
-                    $objet->$champ = Security::clean($objet->$champ);
+
+                    // Problème avec plugin GrahamCampbell et iframe
+                    //$objet->$champ = Security::clean($objet->$champ);
+
+                    $antiXss = new AntiXSS();
+                    $antiXss->removeEvilHtmlTags(array('iframe'));
+                    $objet->$champ = $antiXss->xss_clean($objet->$champ);
                 }
             }
         });

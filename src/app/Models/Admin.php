@@ -86,7 +86,7 @@ class Admin extends Authenticatable
      */
     public function getAccesAttribute()
     {
-        return unserialize($this->attributes['acces']);
+        return !empty($this->attributes['acces']) ? unserialize($this->attributes['acces']) : null;
     }
     public function setAccesAttribute($acces)
     {

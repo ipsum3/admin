@@ -13,7 +13,23 @@
                 </div>
                 <div class="box-body">
                     @foreach($group as $setting)
-                        {{ Aire::{$setting->type}('form_'.$setting->id, $setting->name)->value($setting->value) }}
+                        @switch($setting->type)
+                            @case('checkbox')
+                            <input type="hidden" name="{{ 'form_'.$setting->id }}" value="0">
+                            {{ Aire::checkbox('form_'.$setting->id, $setting->name)->value(1)->checked($setting->value) }}
+                            @break
+
+                            @case('select')
+                            {{ Aire::select($setting->options, 'form_'.$setting->id, $setting->name)->value($setting->value) }}
+                            @break
+
+                            @case('radio')
+                            {{ Aire::radioGroup($setting->options, 'form_'.$setting->id, $setting->name)->value($setting->value) }}
+                            @break
+
+                            @default
+                            {{ Aire::{$setting->type}('form_'.$setting->id, $setting->name)->value($setting->value) }}
+                        @endswitch
                     @endforeach
                 </div>
                 <div class="box-footer">

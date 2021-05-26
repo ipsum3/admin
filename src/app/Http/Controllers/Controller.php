@@ -14,6 +14,7 @@ class Controller extends BaseController
 
     public function __construct()
     {
-        $this->middleware('adminAuthGuard');
+        // Change auth gard
+        app('auth')->setDefaultDriver(config('ipsum.admin.guard'));
     }
 }

@@ -145,10 +145,9 @@ class AdminServiceProvider extends ServiceProvider
 
     public function registerMiddlewareGroup(Router $router)
     {
-        $router->aliasMiddleware('adminAuthGuard', \Ipsum\Admin\app\Http\Middleware\ChangeAuthGuard::class);
         $router->aliasMiddleware('adminAuth', \Ipsum\Admin\app\Http\Middleware\Authenticate::class);
         $router->aliasMiddleware('adminGuest', \Ipsum\Admin\app\Http\Middleware\RedirectIfAuthenticated::class);
-    
+
         foreach (config('ipsum.admin.middlewares') as $middleware_class) {
             $router->pushMiddlewareToGroup('admin', $middleware_class);
         }
@@ -159,7 +158,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/ressources/views' => resource_path('views/ipsum/admin'),
         ], 'views');
-    
+
         $this->publishes([
             __DIR__.'/config' => config_path(),
             base_path().'/vendor/ipsum3/admin-assets' => public_path('ipsum/admin'),

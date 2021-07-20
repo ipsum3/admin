@@ -81,7 +81,7 @@ class AdminServiceProvider extends ServiceProvider
 
         Gate::before(function ($user, $ability, $models) {
             foreach ($models as $model) {
-                if ($model != Admin::class or (is_object($model) and get_class($model) != Admin::class)) {
+                if ($model[0] != config('ipsum.admin.user_model') or (is_object($model[0]) and get_class($model[0]) != config('ipsum.admin.user_model'))) {
                     return null;
                 }
             }
@@ -117,29 +117,29 @@ class AdminServiceProvider extends ServiceProvider
     {
         // add the ipsum admin guard to the configuration
         app()->config['auth.guards'] = app()->config['auth.guards'] +
-        [
-            config('ipsum.admin.guard') => [
-                'driver'   => 'session',
-                'provider' => 'ipsumAdmin',
-            ],
-        ];
+            [
+                config('ipsum.admin.guard') => [
+                    'driver'   => 'session',
+                    'provider' => 'ipsumAdmin',
+                ],
+            ];
         // add the ipsum admin authentication provider to the configuration
         app()->config['auth.providers'] = app()->config['auth.providers'] +
-        [
-            'ipsumAdmin' => [
-                'driver'  => 'eloquent',
-                'model'   => config('ipsum.admin.user_model'),
-            ],
-        ];
+            [
+                'ipsumAdmin' => [
+                    'driver'  => 'eloquent',
+                    'model'   => config('ipsum.admin.user_model'),
+                ],
+            ];
         // add the ipsum admin password broker to the configuration
         app()->config['auth.passwords'] = app()->config['auth.passwords'] +
-        [
-            'ipsumAdmin' => [
-                'provider'  => 'ipsumAdmin',
-                'table'     => 'password_resets',
-                'expire'    => 60,
-            ],
-        ];
+            [
+                'ipsumAdmin' => [
+                    'provider'  => 'ipsumAdmin',
+                    'table'     => 'password_resets',
+                    'expire'    => 60,
+                ],
+            ];
 
     }
 

@@ -43,11 +43,11 @@ class AdminController extends Controller
         // Récupère le premier lien du menu
         foreach(config('ipsum.menu') as $group) {
             foreach($group['sections'] as $section) {
-                if (!isset($section['submenus'])) {
-                    if (!isset($section['route']) or $section['route'] != ['admin.dashboard']) {
+                if (isset($section['can'])) {
+                    if (auth()->user()->can($section['can'][0], $section['can'][1])) {
                         return !empty($section['route']) ? redirect()->route($section['route'][0], (isset($section['route'][1]) ? $section['route'][1] : null)) : redirect($section['url']);
                     }
-                } else {
+                } elseif (isset($section['submenus'])) {
                     foreach($section['submenus'] as $submenu_key => $submenu) {
                         if ((!empty($submenu['gate']) and !\Gate::allows($submenu['gate'])) or (!empty($submenu['can']) and !auth()->user()->can($submenu['can'][0], $submenu['can'][1]))) {
 
@@ -55,6 +55,8 @@ class AdminController extends Controller
                             return !empty($submenu['route']) ? redirect()->route($submenu['route'][0], (isset($submenu['route'][1]) ? $submenu['route'][1] : null)) : redirect($submenu['url']);
                         }
                     }
+                } elseif (!isset($section['route']) or $section['route'] != ['admin.dashboard']) {
+                    return !empty($section['route']) ? redirect()->route($section['route'][0], (isset($section['route'][1]) ? $section['route'][1] : null)) : redirect($section['url']);
                 }
             }
         }

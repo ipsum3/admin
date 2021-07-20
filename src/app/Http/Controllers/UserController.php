@@ -37,7 +37,10 @@ class UserController extends AdminController
     {
         $this->authorize('create', Admin::class);
 
-        $admin = Admin::create($request->all());
+        $requests = $request->all();
+        $requests['password'] = bcrypt($requests['password']);
+
+        $admin = Admin::create($requests);
         Alert::success("L'enregistrement a bien été ajouté")->flash();
         return redirect()->route('adminUser.edit', $admin->id);
     }

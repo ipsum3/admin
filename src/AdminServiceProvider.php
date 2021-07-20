@@ -81,7 +81,7 @@ class AdminServiceProvider extends ServiceProvider
 
         Gate::before(function ($user, $ability, $models) {
             foreach ($models as $model) {
-                if ($model[0] != Admin::class or (is_object($model[0]) and get_class($model[0]) != Admin::class)) {
+                if ($model != Admin::class or (is_object($model) and get_class($model) != Admin::class)) {
                     return null;
                 }
             }

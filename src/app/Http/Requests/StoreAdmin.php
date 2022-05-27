@@ -37,7 +37,7 @@ class StoreAdmin extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'firstname' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:admins,email,'.(isset($current_params['admin']) ? $current_params['admin']->id : '').',id'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => [(isset($current_params['admin']) ? 'nullable' : 'required'), 'string', 'min:8'],
             'role' => ['required', 'in:'.implode(',', $roles)],
         ];
     }

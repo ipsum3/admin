@@ -70,7 +70,7 @@ class UserController extends AdminController
 
         $requests = $request->all();
 
-        if (!$request->has('password')) {
+        if (!$request->filled('password')) {
             unset($requests['password']);
         } else {
             $requests['password'] = bcrypt($requests['password']);

@@ -16,19 +16,19 @@
                         @switch($setting->type)
                             @case('checkbox')
                             <input type="hidden" name="{{ 'form_'.$setting->id }}" value="0">
-                            {{ Aire::checkbox('form_'.$setting->id, $setting->name)->value(1)->checked($setting->value) }}
+                            {{ Aire::checkbox('form_'.$setting->id, $setting->name)->value(1)->checked($setting->value)->helpText((string) $setting->description) }}
                             @break
 
                             @case('select')
-                            {{ Aire::select($setting->options, 'form_'.$setting->id, $setting->name)->value($setting->value) }}
+                            {{ Aire::select($setting->options, 'form_'.$setting->id, $setting->name)->value($setting->value)->helpText((string) $setting->description) }}
                             @break
 
                             @case('radio')
-                            {{ Aire::radioGroup($setting->options, 'form_'.$setting->id, $setting->name)->value($setting->value) }}
+                            {{ Aire::radioGroup($setting->options, 'form_'.$setting->id, $setting->name)->value($setting->value)->helpText((string) $setting->description) }}
                             @break
 
                             @default
-                            {{ Aire::{$setting->type}('form_'.$setting->id, $setting->name)->value($setting->value) }}
+                            {{ Aire::{$setting->type}('form_'.$setting->id, $setting->name)->value($setting->value)->helpText((string) $setting->description) }}
                         @endswitch
                     @endforeach
                 </div>

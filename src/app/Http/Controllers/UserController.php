@@ -37,7 +37,7 @@ class UserController extends AdminController
     {
         $this->authorize('create', Admin::class);
 
-        $requests = $request->all();
+        $requests = $request->validated();
         $requests['password'] = bcrypt($requests['password']);
 
         $admin = Admin::create($requests);
@@ -68,7 +68,7 @@ class UserController extends AdminController
     {
         $this->authorize('update', $admin);
 
-        $requests = $request->all();
+        $requests = $request->validated();
 
         if (!$request->filled('password')) {
             unset($requests['password']);

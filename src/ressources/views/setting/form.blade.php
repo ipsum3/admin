@@ -13,23 +13,13 @@
                 </div>
                 <div class="box-body">
                     @foreach($group as $setting)
-                        @switch($setting->type)
-                            @case('checkbox')
-                            <input type="hidden" name="{{ 'form_'.$setting->id }}" value="0">
-                            {{ Aire::checkbox('form_'.$setting->id, $setting->name)->value(1)->checked($setting->value)->helpText((string) $setting->description) }}
-                            @break
-
-                            @case('select')
-                            {{ Aire::select($setting->options, 'form_'.$setting->id, $setting->name)->value($setting->value)->helpText((string) $setting->description) }}
-                            @break
-
-                            @case('radio')
-                            {{ Aire::radioGroup($setting->options, 'form_'.$setting->id, $setting->name)->value($setting->value)->helpText((string) $setting->description) }}
-                            @break
-
-                            @default
-                            {{ Aire::{$setting->type}('form_'.$setting->id, $setting->name)->value($setting->value)->helpText((string) $setting->description) }}
-                        @endswitch
+                        <x-admin::custom
+                            name="{{ 'form_'.$setting->id }}"
+                            label="{{ $setting->name }}"
+                            description="{{ $setting->description }}"
+                            value="{{ $setting->value }}"
+                            type="{{ $setting->type }}"
+                        />
                     @endforeach
                 </div>
                 <div class="box-footer">

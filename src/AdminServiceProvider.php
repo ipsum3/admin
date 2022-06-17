@@ -4,6 +4,7 @@ namespace Ipsum\Admin;
 
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 use Ipsum\Admin\app\Exceptions\Handler;
 use Ipsum\Admin\app\Models\Admin;
 use Ipsum\Admin\app\Policies\AdminPolicy;
@@ -70,6 +71,9 @@ class AdminServiceProvider extends ServiceProvider
                 \Illuminate\Contracts\Debug\ExceptionHandler::class,
                 Handler::class
             );
+
+
+            Blade::anonymousComponentNamespace('IpsumAdmin::components', 'admin');
         }
 
     }

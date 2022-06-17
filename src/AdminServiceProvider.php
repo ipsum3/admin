@@ -2,6 +2,7 @@
 
 namespace Ipsum\Admin;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Blade;
@@ -51,6 +52,11 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerMiddlewareGroup($this->app->router);
 
         $this->addPolicies();
+
+        if (request()->is(config('ipsum.admin.route_prefix').'*')) {
+            Paginator::useBootstrapFour();
+        }
+
 
     }
 

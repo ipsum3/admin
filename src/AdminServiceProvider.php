@@ -63,10 +63,7 @@ class AdminServiceProvider extends ServiceProvider
 
     public function loadViews()
     {
-        $this->loadViewsFrom([
-            resource_path('views/ipsum/admin'),
-            __DIR__.'/ressources/views',
-        ], 'IpsumAdmin');
+        $this->loadViewsFrom( __DIR__.'/ressources/views', 'IpsumAdmin');
 
         $this->app['view']->prependNamespace('aire', __DIR__.'/ressources/views/vendor/aire');
 
@@ -77,10 +74,8 @@ class AdminServiceProvider extends ServiceProvider
                 \Illuminate\Contracts\Debug\ExceptionHandler::class,
                 Handler::class
             );
-
-
-            Blade::anonymousComponentNamespace('IpsumAdmin::components', 'admin');
         }
+        Blade::anonymousComponentNamespace('IpsumAdmin::components', 'admin');
 
     }
 

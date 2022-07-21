@@ -4,6 +4,7 @@ namespace Ipsum\Admin\app\Http\Requests;
 
 
 use Ipsum\Admin\app\Models\Admin;
+use Illuminate\Validation\Rules\Password;
 
 class StoreAdmin extends FormRequest
 {
@@ -37,7 +38,7 @@ class StoreAdmin extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'firstname' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:admins,email,'.(isset($current_params['admin']) ? $current_params['admin']->id : '').',id'],
-            'password' => [(isset($current_params['admin']) ? 'nullable' : 'required'), 'string', 'min:8'],
+            'password' => [(isset($current_params['admin']) ? 'nullable' : 'required'), 'string', Password::min(8)->letters()->numbers()],
             'role' => ['required', 'in:'.implode(',', $roles)],
         ];
     }

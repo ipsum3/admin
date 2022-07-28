@@ -6,6 +6,28 @@ use Ipsum\Admin\app\Notifications\ResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Ipsum\Admin\app\Models\Admin
+ *
+ * @property int $id
+ * @property string $name
+ * @property string|null $firstname
+ * @property string $email
+ * @property string $password
+ * @property array $acces
+ * @property int|null $role
+ * @property string|null $remember_token
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $acces_to_string
+ * @property-read string $role_to_string
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read int|null $notifications_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin query()
+ * @mixin \Eloquent
+ */
 class Admin extends Authenticatable
 {
     use Notifiable;

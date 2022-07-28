@@ -3,7 +3,7 @@
 namespace Ipsum\Admin\app\Exceptions;
 
 
-class Handler extends \App\Exceptions\Handler
+class Handler extends \Ipsum\Core\app\Exceptions\Handler
 {
 
 

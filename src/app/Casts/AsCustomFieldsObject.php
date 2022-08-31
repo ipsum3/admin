@@ -20,7 +20,7 @@ class AsCustomFieldsObject implements Castable
             public function get($model, $key, $value, $attributes)
             {
                 if (! array_key_exists($key, $attributes)) {
-                    return;
+                    return new CustomFields();
                 }
 
                 $data = json_decode($attributes[$key], true);

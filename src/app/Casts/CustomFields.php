@@ -6,7 +6,7 @@ class CustomFields
 {
     public $fields = [];
 
-    public function __construct( ?Array $fields ) {
+    public function __construct( ?Array $fields = [] ) {
         $this->fields = is_array($fields) ? $fields : [];
     }
 

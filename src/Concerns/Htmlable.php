@@ -18,7 +18,7 @@ trait Htmlable
                 return;
             }
 
-            foreach ($objet->htmlable as $champ) {
+            foreach ($objet->htmlableAttributes() as $champ) {
                 if ($objet->$champ !== null) {
 
                     // Problème avec plugin GrahamCampbell et iframe
@@ -33,5 +33,8 @@ trait Htmlable
 
     }
 
+    protected function htmlableAttributes() {
+        return $this->htmlable;
+    }
 
 }

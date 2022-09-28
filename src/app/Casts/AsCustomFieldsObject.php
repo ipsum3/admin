@@ -23,7 +23,7 @@ class AsCustomFieldsObject implements Castable
                     return new CustomFields();
                 }
 
-                $data = $attributes[$key] === 'null' ? json_decode($attributes[$key], true) : null;
+                $data = $attributes[$key] !== null ? json_decode($attributes[$key], true) : null;
                 return new CustomFields($data);
             }
 

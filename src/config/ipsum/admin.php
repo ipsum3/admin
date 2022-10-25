@@ -27,4 +27,5 @@ return [
         'parametres' => 'Paramètres',
     ),
 
+    'assets_path' => base_path().'/vendor/ipsum3/admin-assets/dist',
 ];

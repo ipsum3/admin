@@ -168,6 +168,12 @@ class AdminServiceProvider extends ServiceProvider
             __DIR__.'/config' => config_path(),
             base_path().'/vendor/ipsum3/admin-assets' => public_path('ipsum/admin'),
         ], 'install');
+
+        if (config('ipsum.admin.assets_path')) {
+            $this->publishes([
+                config('ipsum.admin.assets_path') => public_path('ipsum/admin/dist'),
+            ], ['laravel-assets', 'ipsum-admin-assets']);
+        }
     }
 
     /**

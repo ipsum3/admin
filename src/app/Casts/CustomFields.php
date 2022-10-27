@@ -14,5 +14,13 @@ class CustomFields
         return $this->fields[$name] ?? null;
     }
 
+    public function __set( $name, $value ) {
+        if (is_null($value)) {
+            unset($this->fields[$name]);
+        } else {
+            $this->fields[$name] = $value;
+        }
+    }
+
 
 }

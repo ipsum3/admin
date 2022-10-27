@@ -19,17 +19,27 @@ class AsCustomFieldsObject implements Castable
         {
             public function get($model, $key, $value, $attributes)
             {
-                if (! array_key_exists($key, $attributes)) {
-                    return new CustomFields();
-                }
 
                 $data = $attributes[$key] !== null ? json_decode($attributes[$key], true) : null;
+
                 return new CustomFields($data);
             }
 
             public function set($model, $key, $value, $attributes)
             {
-                return [$key => json_encode($value)];
+                if (is_object($value)) {
+                    $custom_fields = get_object_vars($value);
+                    return json_encode($custom_fields['fields']);
+                }
+
+                if (!is_array($value)) {
+                    throw new InvalidArgumentException('The given value is not a array');
+                }
+
+                // Suppression des champs vides
+                $custom_fields = array_filter($value);
+
+                return json_encode($custom_fields);
             }
 
             public function serialize($model, string $key, $value, array $attributes)

@@ -27,19 +27,20 @@ class AsCustomFieldsObject implements Castable
 
             public function set($model, $key, $value, $attributes)
             {
-                if (is_object($value)) {
+                if (is_array($value)) {
+                    // Suppression des champs vides
+                    $custom_fields = array_filter($value);
+
+                    return json_encode($custom_fields);
+                }
+
+                // Cas ou l'on modifie l'attribut custom fields via une porpriétée
+                if (get_class($value) == CustomFields::class) {
                     $custom_fields = get_object_vars($value);
                     return json_encode($custom_fields['fields']);
                 }
 
-                if (!is_array($value)) {
-                    throw new InvalidArgumentException('The given value is not a array');
-                }
-
-                // Suppression des champs vides
-                $custom_fields = array_filter($value);
-
-                return json_encode($custom_fields);
+                throw new InvalidArgumentException('The given value is not a array');
             }
 
             public function serialize($model, string $key, $value, array $attributes)

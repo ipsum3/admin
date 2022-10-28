@@ -19,6 +19,11 @@ class AsCustomFieldsObject implements Castable
         {
             public function get($model, $key, $value, $attributes)
             {
+			
+				// Dans le cas ou l'on fait un new Model()
+                if (! array_key_exists($key, $attributes)) {
+                    return new CustomFields();
+                }
 
                 $data = $attributes[$key] !== null ? json_decode($attributes[$key], true) : null;
 
@@ -35,9 +40,13 @@ class AsCustomFieldsObject implements Castable
                 }
 
                 // Cas ou l'on modifie l'attribut custom fields via une porpriétée
-                if (get_class($value) == CustomFields::class) {
+                if (is_object($value) and get_class($value) == CustomFields::class) {
                     $custom_fields = get_object_vars($value);
                     return json_encode($custom_fields['fields']);
+                }
+				
+                if (is_null($value)) {
+                    return null;
                 }
 
                 throw new InvalidArgumentException('The given value is not a array');

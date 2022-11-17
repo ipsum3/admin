@@ -9,32 +9,30 @@ use voku\helper\AntiXSS;
 trait Htmlable
 {
 
-    protected static function bootHtmlable()
+    public function setAttribute($key, $value)
     {
+        if ($this->isTtmlableAttribute($key) and $value !== null) {
 
-        static::saving(function ($objet) {
+            // Problème avec plugin GrahamCampbell et iframe
+            //$this->$champ = Security::clean($this->$champ);
 
-            if (!property_exists($objet, 'htmlable')){
-                return;
-            }
+            $antiXss = new AntiXSS();
+            $antiXss->removeEvilHtmlTags(array('iframe'));
+            $value = $antiXss->xss_clean($value);
+        }
 
-            foreach ($objet->htmlableAttributes() as $champ) {
-                if ($objet->$champ !== null) {
-
-                    // Problème avec plugin GrahamCampbell et iframe
-                    //$objet->$champ = Security::clean($objet->$champ);
-
-                    $antiXss = new AntiXSS();
-                    $antiXss->removeEvilHtmlTags(array('iframe'));
-                    $objet->$champ = $antiXss->xss_clean($objet->$champ);
-                }
-            }
-        });
+        return parent::setAttribute($key, $value);
 
     }
 
+
     protected function htmlableAttributes() {
         return $this->htmlable;
+    }
+
+    protected function isTtmlableAttribute($key)
+    {
+        return in_array($key, $this->htmlableAttributes());
     }
 
 }

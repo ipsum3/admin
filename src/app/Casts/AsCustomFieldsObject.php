@@ -4,6 +4,7 @@ namespace Ipsum\Admin\app\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\Castable;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use InvalidArgumentException;
 
 class AsCustomFieldsObject implements Castable
 {

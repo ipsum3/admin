@@ -27,6 +27,11 @@ auth()->user()->isSuperAdmin()
         <div class="brand">
             <a href="{{ route('admin.dashboard') }}"> {{ __('IpsumAdmin::layout.Administration') }}</a>
         </div>
+
+        <button id="hamburger" class="hamburger" type="button">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-times"></i>
+        </button>
        
         @include('IpsumAdmin::layouts._menu')
 

@@ -22,5 +22,8 @@ class CustomFields
         }
     }
 
-
+    public function getArrayCopy()
+    {
+        return $this->fields;
+    }
 }

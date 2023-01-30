@@ -28,6 +28,7 @@ class StoreAdmin extends FormRequest
         $current_params = \Route::current()->parameters();
 
         $roles =  array_keys(config('ipsum.admin.roles'));
+        $acces =  array_keys(config('ipsum.admin.acces'));
         if (\Gate::denies('createSuperAdmin', Admin::class)) {
             if (($key = array_search(Admin::SUPERADMIN, $roles)) !== false) {
                 unset($roles[$key]);
@@ -40,6 +41,7 @@ class StoreAdmin extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:admins,email,'.(isset($current_params['admin']) ? $current_params['admin']->id : '').',id'],
             'password' => [(isset($current_params['admin']) ? 'nullable' : 'required'), 'string', Password::min(8)->letters()->numbers()],
             'role' => ['required', 'in:'.implode(',', $roles)],
+            'acces.*' => ['nullable', 'in:'.implode(',', $acces)],
         ];
     }
 

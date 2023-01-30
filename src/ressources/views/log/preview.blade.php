@@ -7,6 +7,11 @@
     <div class="box">
         <div class="box-header">
             <h2 class="box-title">{{ $file_name }}</h2>
+            <div class="btn-toolbar">
+                <a class="btn btn-outline-danger" href="{{ route('admin.log.delete', encrypt($file_name)) }}" data-toggle="tooltip" title="Supprimer">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </div>
         </div>
         <div class="box-body">
             <div id="accordion">

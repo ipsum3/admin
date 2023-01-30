@@ -75,7 +75,7 @@ Route::group(
             "as" => "admin.log.download",
             "uses" => "LogController@download",
         ));
-        Route::delete("log/delete/{file_name}", array(
+        Route::any("log/delete/{file_name}", array(
             "as" => "admin.log.delete",
             "uses" => "LogController@delete",
         ));

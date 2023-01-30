@@ -18,7 +18,7 @@
                         <th>Date</th>
                         <th>Modif.</th>
                         <th class="text-right">Poids</th>
-                        <th width="320px">Actions</th>
+                        <th width="280px">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,7 +35,7 @@
                                 <a class="btn btn-primary" href="{{ route('admin.log.download', encrypt($file['file_name'])) }}"><i class="fa fa-cloud-download-alt"></i> Download</a>
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash-alt"></i> Delete</button>
+                                <button type="submit" class="btn btn-outline-danger"><i class="fa fa-trash-alt"></i></button>
                             </form>
                         </td>
                     </tr>

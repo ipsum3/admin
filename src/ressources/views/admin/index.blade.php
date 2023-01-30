@@ -6,14 +6,12 @@
     <h1 class="main-title">Administrateurs</h1>
     <div class="box">
         <div class="box-header">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
-                <h2 class="box-title">Liste ({{ $admins->total() }})</h2>
-                <div class="btn-toolbar">
-                    <a class="btn btn-primary" href="{{ route('adminUser.create') }}">
-                        <i class="fas fa-plus"></i>
-                        Ajouter
-                    </a>
-                </div>
+            <h2 class="box-title">Liste ({{ $admins->total() }})</h2>
+            <div class="btn-toolbar">
+                <a class="btn btn-outline-secondary" href="{{ route('adminUser.create') }}">
+                    <i class="fas fa-plus"></i>
+                    Ajouter
+                </a>
             </div>
         </div>
         <div class="box-body">
@@ -26,7 +24,7 @@
                         <th>Email</th>
                         <th>Rôle</th>
                         <th>Accès</th>
-                        <th width="240px">Actions</th>
+                        <th width="160px">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,7 +42,7 @@
                                 @can('delete', $admin)
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash-alt"></i> Supprimer</button>
+                                <button type="submit" class="btn btn-outline-danger"><i class="fa fa-trash-alt"></i></button>
                                 @endcan
                             </form>
                             @endcan

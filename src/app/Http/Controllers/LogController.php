@@ -82,7 +82,7 @@ class LogController extends AdminController
 
         if (app('files')->delete(LogViewer::pathToLogFile(decrypt($file_name)))) {
             \Alert::warning("L'enregistrement a bien été supprimé")->flash();
-            return back();
+            return redirect()->route('admin.log.index');
         }
 
         abort(404, "Le fichier de logs n'existe pas");

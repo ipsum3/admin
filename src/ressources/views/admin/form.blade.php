@@ -9,6 +9,22 @@
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Modification</h3>
+            <div class="btn-toolbar">
+                <button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Enregistrer</button>&nbsp;
+                <button class="btn btn-outline-secondary" type="reset" data-toggle="tooltip" title="Annuler les modifications en cours"><i class="fas fa-undo"></i></button>&nbsp;
+                @if ($admin->exists)
+                    @can('update', $admin)
+                        <a class="btn btn-outline-secondary" href="{{ route('adminUser.create') }}" data-toggle="tooltip" title="Ajouter">
+                            <i class="fas fa-plus"></i>
+                        </a>&nbsp;
+                        @can('delete', $admin)
+                            <a class="btn btn-outline-danger" href="{{ route('adminUser.destroy',$admin) }}" data-toggle="tooltip" title="Supprimer">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        @endcan
+                    @endcan
+                @endif
+            </div>
         </div>
         <div class="box-body">
             <div class="form-row">
@@ -28,10 +44,6 @@
                 @endif
                 @endcan()
             </div>
-        </div>
-        <div class="box-footer">
-            <div><button class="btn btn-outline-secondary" type="reset">Annuler</button></div>
-            <div><button class="btn btn-primary" type="submit">Enregistrer</button></div>
         </div>
     </div>
     {{ Aire::close() }}

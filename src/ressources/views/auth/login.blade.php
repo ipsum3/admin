@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="rememberMe" value="remember-me" {{ old('remember') ? 'checked' : '' }}>
+                        <input type="checkbox" class="form-check-input" id="rememberMe" value="1" name="remember" {{ old('remember') ? 'checked' : '' }}>
                         <label class="for-check-label" for="rememberMe"> {{ __('IpsumAdmin::auth.Se souvenir de moi') }}</label>
                     </div>
                 </div>

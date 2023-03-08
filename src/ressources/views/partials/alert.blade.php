@@ -1,6 +1,6 @@
 @foreach (Alert::getMessages() as $type => $messages)
     @foreach ($messages as $message)
-        <div class="alert alert-{{ $type }} alert-dismissible fade show" role="alert">
+        <div class="alert alert-{{ $type == 'error' ? 'danger' : $type }} alert-dismissible fade show" role="alert">
             <div class="alert-icon">
                 <i class="fas
                 @switch($type)
@@ -13,7 +13,7 @@
                     @case('success')
                         fa-check-circle
                         @break
-                    @case('danger')
+                    @case('error')
                         fa-minus-circle
                         @break
                     @default

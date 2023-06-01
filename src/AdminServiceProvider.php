@@ -103,7 +103,9 @@ class AdminServiceProvider extends ServiceProvider
         Gate::define('admin-acces', function ($user, $acces) {
             return $user->hasAcces($acces);
         });
-
+        Gate::define('super-admin-acces', function ($user) {
+            return false;
+        });
     }
 
     public function addCustomConfigurationValues()

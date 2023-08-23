@@ -11,8 +11,7 @@
     "require": {
         "php": "^8.0.2",
         "glhd/aire": "^2.5",
-        "ipsum3/admin-assets": "dev-master@dev",
-        "graham-campbell/security": "^9.1"
+        "ipsum3/admin-assets": "dev-master@dev"
     },
     "repositories": [
         {

@@ -13,11 +13,8 @@ trait Htmlable
     {
         if ($this->isTtmlableAttribute($key) and $value !== null) {
 
-            // Problème avec plugin GrahamCampbell et iframe
-            //$this->$champ = Security::clean($this->$champ);
-
             $antiXss = new AntiXSS();
-            $antiXss->removeEvilHtmlTags(array('iframe'));
+            $antiXss->removeEvilHtmlTags(config('ipsum.admin.remove_evil_html_tags'));
             $value = $antiXss->xss_clean($value);
         }
 

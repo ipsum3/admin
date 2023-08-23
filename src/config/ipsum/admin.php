@@ -28,4 +28,9 @@ return [
     ),
 
     'assets_path' => base_path().'/vendor/ipsum3/admin-assets/dist',
+
+    'remove_evil_html_tags' => array(
+        'iframe',
+        'button'
+    )
 ];

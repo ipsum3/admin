@@ -110,7 +110,7 @@ class UserController extends AdminController
 
         $otp = TOTP::generate();
         $otp->setLabel(config('app.name'));
-        $otp->setIssuer($admin->name);
+        $otp->setIssuer($admin->email);
         $grCodeUri = $otp->getProvisioningUri();
 
         session()->flash('otp_secret', $otp->getSecret());

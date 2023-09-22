@@ -12,7 +12,8 @@
         "php": "^8.0.2",
         "glhd/aire": "^2.5",
         "voku/anti-xss": "~4.1.33",
-        "ipsum3/admin-assets": "dev-master@dev"
+        "ipsum3/admin-assets": "dev-master@dev",
+        "spomky-labs/otphp": "^11.2"
     },
     "repositories": [
         {

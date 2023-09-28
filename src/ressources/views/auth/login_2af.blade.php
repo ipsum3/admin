@@ -1,7 +1,7 @@
 @extends('IpsumAdmin::layouts.login')
 
 @section('content')
-    <form class="box l-single-inner" method="POST" action="{{ route('admin.login.send2af', session()->has('admin_waiting_for_2af')) }}">
+    <form class="box l-single-inner" method="POST" action="{{ route('admin.login.send2af', session()->get('admin_waiting_for_2af')) }}">
         @csrf
         <h1 class="h1 mb-3 text-center">Validation en deux étapes</h1>
         @if(session()->has('error'))

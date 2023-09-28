@@ -109,8 +109,8 @@ class UserController extends AdminController
         $this->authorize('update', $admin);
 
         $otp = TOTP::generate();
-        $otp->setLabel($admin->email); // inverser parce que les autres appli l'ont dans se sens
-        $otp->setIssuer(config('app.name')); // inverser parce que les autres appli l'ont dans se sens
+        $otp->setIssuer(config('app.name'));
+        $otp->setLabel($admin->email);
         $grCodeUri = $otp->getProvisioningUri();
 
         session()->flash('otp_secret', $otp->getSecret());

@@ -70,7 +70,7 @@ class LoginController extends Controller
 
     public function login2AF(Request $request, Admin $admin)
     {
-        if (session()->has('admin_waiting_for_2af') != $admin->id) {
+        if (session()->get('admin_waiting_for_2af') != $admin->id) {
             return redirect()->route('admin.login');
         }
 

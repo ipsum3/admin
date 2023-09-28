@@ -37,9 +37,9 @@
                         <td>{{ $admin->roleToString }}</td>
                         <td>{{ $admin->accesToString }}</td>
                         <td>@if($admin->secret_totp)
-                                <span class="badge badge-success">Double authentification activé</span>
+                                <span class="badge badge-success">Double authentification activée</span>
                             @else
-                                <span class="badge badge-danger">Double authentification non activé</span>
+                                <span class="badge badge-danger">Double authentification non activée</span>
                             @endif
                         </td>
                         <td class="text-right">

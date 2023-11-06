@@ -75,8 +75,8 @@ class AdminServiceProvider extends ServiceProvider
                 Handler::class
             );
         }
-        Blade::anonymousComponentNamespace('IpsumAdmin::components', 'admin');
-
+        Blade::anonymousComponentNamespace('IpsumAdmin::components', 'admin-test'); // TODO voir si on peux garder anonymous
+        Blade::componentNamespace('Ipsum\\Admin\\App\\View\\Components', 'admin');
     }
 
 

@@ -2,6 +2,9 @@
 
 namespace Ipsum\Admin\app\Casts;
 
+use Illuminate\Support\Collection;
+use voku\helper\AntiXSS;
+
 class CustomFields
 {
     public $fields = [];
@@ -11,6 +14,17 @@ class CustomFields
     }
 
     public function __get( $name ) {
+        if(isset($this->fields[$name]) and (is_array($this->fields[$name]))) {
+            $collection = new Collection($this->fields[$name]);
+            return $collection->map(function ($item, $name) {
+                if(is_array($item)) {
+                    return new self($item);
+                } else {
+                    return $item;
+                }
+            });
+        }
+
         return $this->fields[$name] ?? null;
     }
 

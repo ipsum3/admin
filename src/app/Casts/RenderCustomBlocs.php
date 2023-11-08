@@ -14,15 +14,13 @@ class RenderCustomBlocs implements CastsAttributes
             return $custom_blocs;
         }
 
-        $customViewPath = config('ipsum.article.custom_bloc_path');
+        $customViewPath = config('ipsum.admin.custom_bloc_view_directory');
         $output = $attributes['texte'];
 
         foreach ($custom_blocs as $key => $bloc) {
             $viewName = '_'.$bloc->name;
             $fullViewPath = $customViewPath . '.' . $viewName;
             if (view()->exists($fullViewPath) && isset($bloc->fields)) {
-                dump($bloc);
-
                 $output .= view($fullViewPath, ['key' => $key, 'bloc' => $bloc->fields ])->render();
             }
         }

@@ -14,9 +14,10 @@
                 <div class="box-body">
                     @foreach($group as $setting)
                         @php
-                            $field = (array) $setting;
-                            $field_name = 'custom_fields['.$field['name'].']';
-                            $field_value = old('custom_fields.'.$field['name'], $group->custom_fields->{$field['name']} ?  : ($field['type'] == "repeater" ? [] : '') );
+                            $field = $setting->toArray();
+                            $field['label'] = $field['name'];
+                            $field_name = 'form_'.$setting->id;
+                            $field_value = old( $field_name, $setting->value ?  : ($field['type'] == "repeater" ? [] : '') );
                         @endphp
                         <x-admin::custom :field="$field" :name="$field_name" :value="$field_value"/>
                     @endforeach

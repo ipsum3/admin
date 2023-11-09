@@ -6,22 +6,30 @@ use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
 class RenderCustomBlocs implements CastsAttributes
 {
+
+    protected $champ_complementaire;
+    protected $champ_custom_blocs;
+
+    public function __construct(string $champ_custom_blocs = 'custom_blocs', string $champ_complementaire = 'texte')
+    {
+        $this->champ_complementaire = $champ_complementaire;
+        $this->champ_custom_blocs = $champ_custom_blocs;
+    }
+
     public function get($model, $key, $value, $attributes)
     {
-        $custom_blocs = $model->custom_blocs;
-
-        if (!$custom_blocs) {
-            return $custom_blocs;
+        if (! isset($attributes[$this->champ_complementaire]) or ! isset($attributes[$this->champ_custom_blocs])) {
+            return null;
         }
 
-        $customViewPath = config('ipsum.admin.custom_bloc_view_directory');
-        $output = $attributes['texte'];
+        $custom_blocs = $model->{$this->champ_custom_blocs};
+        $custom_view_directory = config('ipsum.admin.custom_bloc_view_directory');
+        $output = $model->{$this->champ_complementaire};
 
         foreach ($custom_blocs as $key => $bloc) {
-            $viewName = '_'.$bloc->name;
-            $fullViewPath = $customViewPath . '.' . $viewName;
-            if (view()->exists($fullViewPath) && isset($bloc->fields)) {
-                $output .= view($fullViewPath, ['key' => $key, 'bloc' => $bloc->fields ])->render();
+            $view = $custom_view_directory . '.' . '_'.$bloc->name;
+            if (view()->exists($view) and isset($bloc->fields)) {
+                $output .= view($view, ['key' => $key, 'bloc' => $bloc->fields ])->render();
             }
         }
 
@@ -30,6 +38,6 @@ class RenderCustomBlocs implements CastsAttributes
 
     public function set($model, $key, $value, $attributes)
     {
-        return $value;
+        return null;
     }
 }

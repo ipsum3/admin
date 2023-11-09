@@ -30,4 +30,6 @@
         @endforeach
     {{ Aire::close() }}
 
+    <script src="{{ asset('ipsum/admin/dist/tinymce.js') }}"></script>
+
 @endsection

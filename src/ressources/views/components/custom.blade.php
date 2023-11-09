@@ -30,7 +30,12 @@
         @endphp
         <div class="box" id="bloc_{{ $key }}">
             <div class="box-header">
-                <h2 class="box-title">{{ $field['label'] }}</h2>
+                <h2 class="box-title">
+                    {{ $field['label'] }}
+                    @if (!empty($field['description']))
+                        <span class="text-muted">{{ $field['description'] }}</span>
+                    @endif
+                </h2>
                 <div class="btn-toolbar">
                     <div class="btn copy-custom-field-btn" data-field_id="{{ $key }}" data-toggle="tooltip" title="Dupliquer"><span class="fa fa-copy"></span></div>
                 </div>

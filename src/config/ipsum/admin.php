@@ -32,5 +32,7 @@ return [
     'remove_evil_html_tags' => array(
         'iframe',
         'button'
-    )
+    ),
+
+    'custom_bloc_view_directory' => 'partials.custom_blocs',
 ];

@@ -26,7 +26,7 @@ class Custom extends Component
         $options = $this->setOptions($field);
 
         $this->label = $field['label'];
-        $this->description = $field['description'];
+        $this->description = $field['description'] ?? null;
         $this->options = $options;
         $this->name = $name;
         $this->value = $value;
@@ -57,7 +57,7 @@ class Custom extends Component
 
     protected function setOptions($field)
     {
-        $options = isset($field['options']) ? $field['options'] : [];
+        $options = $field['options'] ?? [];
 
         if ($field['type'] === 'relation') {
             $query = $field['model']::query();
@@ -76,8 +76,6 @@ class Custom extends Component
             }
             $options = $query->get()->pluck('nom', 'id');
         }
-        $options = collect(['' => '---- ' . $field['label'] . ' -----'])->union($options);
-
-        return $options;
+        return collect(['' => '---- ' . $field['label'] . ' -----'])->union($options);
     }
 }

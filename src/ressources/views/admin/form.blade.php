@@ -11,9 +11,9 @@
             <h3 class="box-title">Modification</h3>
             <div class="btn-toolbar">
                 <button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Enregistrer</button>&nbsp;
-                <a class="btn btn-outline-secondary" href="{{ route('admin.2fa', $admin) }}" data-toggle="tooltip" title="Activer la double authentification"><i class="fas fa-qrcode"></i> Méthodes d’authentification</a>&nbsp;
                 <button class="btn btn-outline-secondary" type="reset" data-toggle="tooltip" title="Annuler les modifications en cours"><i class="fas fa-undo"></i></button>&nbsp;
                 @if ($admin->exists)
+                    <a class="btn btn-outline-secondary" href="{{ route('admin.2fa', $admin) }}" data-toggle="tooltip" title="Activer la double authentification"><i class="fas fa-qrcode"></i> Méthodes d’authentification</a>&nbsp;
                     @can('update', $admin)
                         <a class="btn btn-outline-secondary" href="{{ route('adminUser.create') }}" data-toggle="tooltip" title="Ajouter">
                             <i class="fas fa-plus"></i>

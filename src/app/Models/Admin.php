@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string|null $firstname
  * @property string $email
  * @property string $password
+ * @property string|null $secret_totp
  * @property array $acces
  * @property int|null $role
  * @property string|null $remember_token

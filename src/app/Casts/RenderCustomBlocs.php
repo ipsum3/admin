@@ -18,7 +18,7 @@ class RenderCustomBlocs implements CastsAttributes
 
     public function get($model, $key, $value, $attributes)
     {
-        if (! isset($attributes[$this->champ_complementaire]) or ! isset($attributes[$this->champ_custom_blocs])) {
+        if (! array_key_exists($this->champ_complementaire, $attributes) or ! array_key_exists($this->champ_custom_blocs, $attributes)) {
             return null;
         }
 

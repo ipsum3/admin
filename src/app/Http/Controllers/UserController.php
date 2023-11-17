@@ -56,6 +56,11 @@ class UserController extends AdminController
         //
     }
 
+    public function account()
+    {
+        return $this->edit(auth()->user());
+    }
+
     public function edit(Admin $admin)
     {
         $this->authorize('update', $admin);

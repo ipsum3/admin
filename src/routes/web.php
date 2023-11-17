@@ -70,6 +70,12 @@ Route::group(
             "uses" => "UserController@twoFactorAuthentificationDelete",
         ));
 
+
+      Route::get("adminUser/account", array(
+        "as" => "admin.account",
+        "uses" => "UserController@account",
+      ));
+
         Route::resource('adminUser', 'UserController')->parameters([
             'adminUser' => 'admin'
         ]);

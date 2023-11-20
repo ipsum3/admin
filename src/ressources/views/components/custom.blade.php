@@ -13,11 +13,11 @@
         @break
 
     @case('html-simple')
-        {{ Aire::textArea($name, $label)->class('tinymce-simple')->value($value)->helpText((string) $description) }}
+        {{ Aire::textArea($name, $label)->class('tinymce-simple')->value($value)->helpText((string) $description)->data('medias', route('admin.media.popin')) }}
         @break
 
     @case('html')
-        {{ Aire::textArea($name, $label)->class('tinymce')->value($value)->helpText((string) $description) }}
+        {{ Aire::textArea($name, $label)->class('tinymce')->value($value)->helpText((string) $description)->data('medias', route('admin.media.popin')) }}
         @break
 
     @case('relation')

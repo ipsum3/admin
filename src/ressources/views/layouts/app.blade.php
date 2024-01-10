@@ -25,7 +25,7 @@ auth()->user()->isSuperAdmin()
     <div class="l-global">
 
         <div class="brand">
-            <a href="{{ route('admin.dashboard') }}"> {{ __('IpsumAdmin::layout.Administration') }}</a>
+            <a href="{{ route('admin.dashboard') }}"> {{ config('ipsum.admin.nom', __('IpsumAdmin::layout.Administration')) }}</a>
         </div>
 
         <button id="hamburger" class="hamburger" type="button">
@@ -39,20 +39,7 @@ auth()->user()->isSuperAdmin()
             
         </nav>
         <nav class="header l-global-header-b">
-            <ul class="nav">
-                <li>
-                    <a class="nav-link" href="{{ url('/') }}">{{ __('IpsumAdmin::layout.Aller sur le site') }}</a>
-                </li>
-                @guest
-                <li>
-                    <a class="nav-link" href="{{ route('admin.login') }}">{{ __('IpsumAdmin::layout.Connexion') }}</a>
-                </li>
-                @else
-                <li>
-                    <div class="nav-link"><a href="{{ route('admin.logout') }}">{{ __('IpsumAdmin::layout.Déconnexion') }}</a> (<a href="{{ route('adminUser.edit', auth()->user()->id) }}">{{ auth()->user()->name }}</a>)</div>
-                </li>
-                @endguest
-            </ul>
+            @include('IpsumAdmin::layouts._nav_header')
         </nav>
 
         <main role="main" class="main">

@@ -35,14 +35,21 @@ class StoreAdmin extends FormRequest
             }
         }
 
-        return [
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
             'firstname' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:admins,email,'.(isset($current_params['admin']) ? $current_params['admin']->id : '').',id'],
             'password' => [(isset($current_params['admin']) ? 'nullable' : 'required'), 'string', Password::default()],
-            'role' => ['required', 'in:'.implode(',', $roles)],
-            'acces.*' => ['nullable', 'in:'.implode(',', $acces)],
         ];
+
+        if (\Gate::allows('create', Admin::class)) {
+            $rules += [
+                'role' => ['required', 'in:'.implode(',', $roles)],
+                'acces.*' => ['nullable', 'in:'.implode(',', $acces)],
+            ];
+        }
+
+        return $rules;
     }
 
 }

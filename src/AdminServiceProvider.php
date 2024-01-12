@@ -86,7 +86,7 @@ class AdminServiceProvider extends ServiceProvider
 
         Gate::before(function ($user, $ability, $models) {
             foreach ($models as $model) {
-                if ($model[0] != config('ipsum.admin.user_model') or (is_object($model[0]) and get_class($model[0]) != config('ipsum.admin.user_model'))) {
+                if (empty($model[0]) or $model[0] != config('ipsum.admin.user_model') or (is_object($model[0]) and get_class($model[0]) != config('ipsum.admin.user_model'))) {
                     return null;
                 }
             }
@@ -102,6 +102,9 @@ class AdminServiceProvider extends ServiceProvider
         });
         Gate::define('admin-acces', function ($user, $acces) {
             return $user->hasAcces($acces);
+        });
+        Gate::define('admin-role', function ($user, $role) {
+            return $user->hasRole($role);
         });
         Gate::define('super-admin-acces', function ($user) {
             return false;

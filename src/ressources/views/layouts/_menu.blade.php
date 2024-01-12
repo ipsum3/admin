@@ -8,7 +8,9 @@
             @foreach($group['sections'] as $section_key => $section)
                 <li>
                     @if (!isset($section['submenus']))
-                        @if (empty($section['can']) or auth()->user()->can($section['can'][0], $section['can'][1]))
+                        @if ((isset($section['can']) and !auth()->user()->can($section['can'][0], $section['can'][1]))
+                            or (isset($section['cannot']) and !auth()->user()->cannot($section['cannot'][0], $section['cannot'][1])))
+                        @else
                             <a class="menu-link {{ request()->is(config('ipsum.admin.route_prefix').$section['url_prefix']) ? 'active' : '' }}" href="{{ !empty($section['route']) ? route($section['route'][0], (isset($section['route'][1]) ? $section['route'][1] : null)) : url($section['url']) }}">
                                 <i class="menu-link-icon {{ $section['icon'] }}"></i>
                                 {{ $section['title'] }}
@@ -17,7 +19,8 @@
                     @else
                         @php
                             // TODO mettre la logique dans une class menu singleton ?
-                            if (isset($section['can']) and !auth()->user()->can($section['can'][0], $section['can'][1])) {
+                            if (isset($section['can']) and !auth()->user()->can($section['can'][0], $section['can'][1])
+                                or isset($section['cannot']) and !auth()->user()->cannot($section['cannot'][0], $section['cannot'][1])) {
                                 continue;
                             }
                             $urls_prefix = [];
@@ -26,7 +29,9 @@
                                     $urls_prefix[] = config('ipsum.admin.route_prefix').$submenu['url_prefix'];
                                 }
                                 // Gate inutile car tous peut être géré par can
-                                if ((!empty($submenu['gate']) and !Gate::allows($submenu['gate'])) or (!empty($submenu['can']) and !auth()->user()->can($submenu['can'][0], $submenu['can'][1]))) {
+                                if ((!empty($submenu['gate']) and !Gate::allows($submenu['gate']))
+                                    or (!empty($submenu['can']) and !auth()->user()->can($submenu['can'][0], $submenu['can'][1]))
+                                    or (!empty($submenu['cannot']) and !auth()->user()->cannot($submenu['cannot'][0], $submenu['cannot'][1]))) {
                                     unset($section['submenus'][$submenu_key]);
                                 }
                             }

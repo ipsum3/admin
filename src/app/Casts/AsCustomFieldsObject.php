@@ -20,8 +20,8 @@ class AsCustomFieldsObject implements Castable
         {
             public function get($model, $key, $value, $attributes)
             {
-			
-				// Dans le cas ou l'on fait un new Model()
+
+                // Dans le cas ou l'on fait un new Model()
                 if (! array_key_exists($key, $attributes)) {
                     return new CustomFields();
                 }
@@ -35,7 +35,9 @@ class AsCustomFieldsObject implements Castable
             {
                 if (is_array($value)) {
                     // Suppression des champs vides
-                    $custom_fields = array_filter($value);
+                    $custom_fields = array_filter($value, function($val) {
+                        return !is_null($val) and $val !== "";
+                    });
 
                     return json_encode($custom_fields);
                 }

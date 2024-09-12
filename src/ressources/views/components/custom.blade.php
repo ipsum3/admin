@@ -37,7 +37,7 @@
                     @endif
                 </h2>
                 <div class="btn-toolbar">
-                    <div class="btn copy-custom-field-btn" data-field_id="{{ $key }}" data-toggle="tooltip" title="Dupliquer"><span class="fa fa-copy"></span></div>
+                    <div class="btn copy-custom-field-btn" data-field_id="{{ $key }}" data-toggle="tooltip" title="Ajouter"><span class="fa fa-plus"></span></div>
                 </div>
             </div>
             <div class="box-body">

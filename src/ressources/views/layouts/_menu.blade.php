@@ -1,6 +1,10 @@
 <nav class="menu" id="menu">
 
     @foreach(config('ipsum.menu') as $group_key => $group)
+        @if (isset($group['can']) and !auth()->user()->can($group['can'][0], $group['can'][1])
+            or isset($group['cannot']) and !auth()->user()->cannot($group['cannot'][0], $group['cannot'][1]))
+            @php continue; @endphp
+        @endif
         @if (!empty($group['title']))
             <div class="menu-title">{{ $group['title'] }}</div>
         @endif

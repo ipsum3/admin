@@ -47,6 +47,26 @@
             @endcan()
         </div>
     </div>
+
+    @if (config('ipsum.admin.custom_fields'))
+        <div class="box">
+            <div class="box-header">
+                <h2 class="box-title">
+                    Informations complémentaires
+                </h2>
+            </div>
+            <div class="box-body">
+                @foreach(config('ipsum.admin.custom_fields') as $field)
+                    @php
+                        $field_name = 'custom_fields['.$field['name'].']';
+                        $field_value = old('custom_fields.'.$field['name'], $admin->custom_fields->{$field['name']} ?? ($field['type'] == "repeater" ? [] : '') );
+                    @endphp
+                    <x-admin::custom :field="$field" :name="$field_name" :value="$field_value"/>
+                @endforeach
+            </div>
+        </div>
+        <script src="{{ asset('ipsum/admin/dist/tinymce.js') }}"></script>
+    @endif
     {{ Aire::close() }}
 
 @endsection

@@ -35,12 +35,20 @@ class StoreAdmin extends FormRequest
             }
         }
 
+        $rules = [];
+
+        if (config('ipsum.admin.custom_fields')) {
+            foreach (config('ipsum.admin.custom_fields') as $field) {
+                $rules['custom_fields.'.$field['name']] = $field['rules'];
+            }
+        }
+
         $rules = [
             'name' => ['required', 'string', 'max:255'],
             'firstname' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:admins,email,'.(isset($current_params['admin']) ? $current_params['admin']->id : '').',id'],
             'password' => [(isset($current_params['admin']) ? 'nullable' : 'required'), 'string', Password::default()],
-        ];
+        ] + $rules;
 
         if (\Gate::allows('create', Admin::class)) {
             $rules += [

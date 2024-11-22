@@ -35,4 +35,6 @@ return [
     ),
 
     'custom_bloc_view_directory' => 'partials.custom_blocs',
+
+    'custom_fields' => []
 ];

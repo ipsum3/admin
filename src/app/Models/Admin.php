@@ -2,6 +2,7 @@
 
 namespace Ipsum\Admin\app\Models;
 
+use Ipsum\Admin\app\Casts\AsCustomFieldsObject;
 use Ipsum\Admin\app\Notifications\ResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -44,7 +45,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'firstname', 'email', 'password', 'role', 'acces',
+        'name', 'firstname', 'email', 'password', 'role', 'acces', 'custom_fields',
     ];
 
     /**
@@ -54,6 +55,10 @@ class Admin extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    protected $casts = [
+        'custom_fields' => AsCustomFieldsObject::class,
     ];
 
 

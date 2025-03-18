@@ -19,7 +19,7 @@ auth()->user()->isSuperAdmin()
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,700" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/solid.min.css" rel="stylesheet">
     
-    <link rel="stylesheet" href="{{ asset('ipsum/admin/dist/main.css') }}">
+    <link rel="stylesheet" href="@asset_versioned('ipsum/admin/dist/main.css')">
 </head>
 <body>
     <div class="l-global">
@@ -57,7 +57,7 @@ auth()->user()->isSuperAdmin()
         </div>
     </div>
 
-    <script src="{{ asset('ipsum/admin/dist/main.js') }}"></script>
+    <script src="@asset_versioned('ipsum/admin/dist/main.js')"></script>
 
     </body>
 </html>

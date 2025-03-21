@@ -166,7 +166,7 @@ class AdminServiceProvider extends ServiceProvider
     public function publishFiles()
     {
         $this->publishes([
-            __DIR__.'/ressources/views' => resource_path('views/ipsum/admin'),
+            __DIR__.'/ressources/views' => resource_path('views/vendor/IpsumAdmin'),
         ], 'views');
 
         $this->publishes([

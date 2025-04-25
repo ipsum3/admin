@@ -17,7 +17,7 @@
                         @else
                             <a class="menu-link {{ request()->is(config('ipsum.admin.route_prefix').$section['url_prefix']) ? 'active' : '' }}" href="{{ !empty($section['route']) ? route($section['route'][0], (isset($section['route'][1]) ? $section['route'][1] : null)) : url($section['url']) }}">
                                 <i class="menu-link-icon {{ $section['icon'] }}"></i>
-                                {{ $section['title'] }}
+                                <span class="menu-link-text">{{ $section['title'] }}</span>
                             </a>
                         @endif
                     @else

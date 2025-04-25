@@ -18,7 +18,7 @@ auth()->user()->isSuperAdmin()
     <!-- Optional CDN -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,700" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/solid.min.css" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="@asset_versioned('ipsum/admin/dist/main.css')">
 </head>
 <body>
@@ -32,11 +32,11 @@ auth()->user()->isSuperAdmin()
             <i class="fas fa-bars"></i>
             <i class="fas fa-times"></i>
         </button>
-       
+
         @include('IpsumAdmin::layouts._menu')
 
         <nav class="header l-global-header-a">
-            
+            <a id="sidebar-button" class="nav-link sidebar-toggle"><i class="fas fa-angle-left"></i></a>
         </nav>
         <nav class="header l-global-header-b">
             @include('IpsumAdmin::layouts._nav_header')

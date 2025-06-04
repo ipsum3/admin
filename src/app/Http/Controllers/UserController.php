@@ -2,9 +2,15 @@
 
 namespace Ipsum\Admin\app\Http\Controllers;
 
+use BaconQrCode\Renderer\Image\SvgImageBackEnd;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Writer;
 use Ipsum\Admin\app\Http\Requests\StoreAdmin;
 use Ipsum\Admin\app\Models\Admin;
+use OTPHP\TOTP;
 use Prologue\Alerts\Facades\Alert;
+use Illuminate\Http\Request;
 
 class UserController extends AdminController
 {
@@ -13,7 +19,7 @@ class UserController extends AdminController
     {
         $this->authorize('viewAny', Admin::class);
 
-        $admins = Admin::latest()->paginate(10);
+        $admins = Admin::latest()->paginate();
 
         return view('IpsumAdmin::admin.index', compact('admins'));
     }
@@ -96,5 +102,58 @@ class UserController extends AdminController
         Alert::warning("L'enregistrement a bien été supprimé")->flash();
         return back();
 
+    }
+
+    public function twoFactorAuthentification(Admin $admin)
+    {
+        $this->authorize('update', $admin);
+
+        $otp = TOTP::create();
+        $otp->setIssuer(config('app.name'));
+        $otp->setLabel($admin->email);
+        $grCodeUri = $otp->getProvisioningUri();
+
+        session()->flash('otp_secret', $otp->getSecret());
+
+        // Génération du code QR
+        $renderer = new ImageRenderer(
+            new RendererStyle(400),
+            new SvgImageBackEnd()
+        );
+        $writer = new Writer($renderer);
+        $qr_code = $writer->writeString($grCodeUri);
+
+        return view('IpsumAdmin::admin.2fa', compact('admin', 'qr_code'));
+    }
+
+    public function twoFactorAuthentificationValidate(Request $request, Admin $admin)
+    {
+        $this->authorize('update', $admin);
+
+        $otp_secret = session()->get('otp_secret');
+        //session()->forget('otp_secret');
+
+        $otp = TOTP::create($otp_secret);
+        if ($otp->verify($request->secret)) {
+
+            $admin->secret_totp = $otp_secret;
+            $admin->save();
+            Alert::success("L'authentification a été mis en place")->flash();
+            return redirect()->route('adminUser.edit', $admin);
+        }
+
+        Alert::warning("L'authentification a échoué")->flash();
+        return back();
+    }
+
+    public function twoFactorAuthentificationDelete(Request $request, Admin $admin)
+    {
+        $this->authorize('update', $admin);
+
+        $admin->secret_totp = null;
+        $admin->save();
+
+        Alert::success("La double authentification a été désactivée avec succès.")->flash();
+        return redirect()->route('adminUser.edit', $admin);
     }
 }

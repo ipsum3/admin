@@ -11,7 +11,9 @@
     "require": {
         "glhd/aire": "^1.7",
         "ipsum3/admin-assets": "dev-master@dev",
-        "graham-campbell/security": "^9.0"
+        "graham-campbell/security": "^9.0",
+        "spomky-labs/otphp": "^10.0",
+        "bacon/bacon-qr-code": "^2.0"
     },
     "repositories": [
         {

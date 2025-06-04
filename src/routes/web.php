@@ -22,6 +22,14 @@ Route::group(
         Route::post("login", array(
             "uses" => "Auth\LoginController@login",
         ));
+        Route::get("login/2af", array(
+            "as" => "admin.login.2af",
+            "uses" => "Auth\LoginController@showLoginForm2AF",
+        ));
+        Route::post("login/{admin}/2af", array(
+            "as" => "admin.login.send2af",
+            "uses" => "Auth\LoginController@login2AF",
+        ));
         Route::get("logout", array(
             "as" => "admin.logout",
             "uses" => "Auth\LoginController@logout",
@@ -45,6 +53,21 @@ Route::group(
         Route::post("password/reset", array(
             "as" => "admin.password.update",
             "uses" => "Auth\ResetPasswordController@reset",
+        ));
+
+
+        Route::get("adminUser/{admin}/2fa", array(
+            "as" => "admin.2fa",
+            "uses" => "UserController@twoFactorAuthentification",
+        ));
+        Route::post("adminUser/{admin}/2fa", array(
+            "as" => "admin.2faValidate",
+            "uses" => "UserController@twoFactorAuthentificationValidate",
+        ));
+
+        Route::delete("adminUser/{admin}/2fa", array(
+            "as" => "admin.2faDelete",
+            "uses" => "UserController@twoFactorAuthentificationDelete",
         ));
 
 

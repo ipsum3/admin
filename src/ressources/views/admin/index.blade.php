@@ -26,6 +26,7 @@
                         <th>Email</th>
                         <th>Rôle</th>
                         <th>Accès</th>
+                        <th>Authentification</th>
                         <th width="240px">Actions</th>
                     </tr>
                 </thead>
@@ -37,6 +38,12 @@
                         <td>{{ $admin->email }}</td>
                         <td>{{ $admin->roleToString }}</td>
                         <td>{{ $admin->accesToString }}</td>
+                        <td>@if($admin->secret_totp)
+                                <span class="badge badge-success">Double authentification activée</span>
+                            @else
+                                <span class="badge badge-danger">Double authentification non activée</span>
+                            @endif
+                        </td>
                         <td class="text-right">
                             @can('update', $admin)
                             <form action="{{ route('adminUser.destroy',$admin->id) }}" method="POST">

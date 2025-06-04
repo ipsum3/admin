@@ -9,6 +9,9 @@
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Modification</h3>
+            <div class="btn-toolbar">
+                <a class="btn btn-outline-secondary" href="{{ route('admin.2fa', $admin) }}" data-toggle="tooltip" title="Activer la double authentification"><i class="fas fa-qrcode"></i> Méthodes d’authentification</a>&nbsp;
+            </div>
         </div>
         <div class="box-body">
             <div class="form-row">

@@ -5,6 +5,9 @@ namespace Ipsum\Admin\app\Http\Controllers\Auth;
 use Ipsum\Admin\app\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Ipsum\Admin\app\Models\Admin;
+use OTPHP\TOTP;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -19,7 +22,9 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers {
+        login as authenticatesUsersLogin;
+    }
 
 
     /**
@@ -37,6 +42,49 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('IpsumAdmin::auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        session()->flash('remember', $request->boolean('remember'));
+        return $this->authenticatesUsersLogin($request);
+    }
+
+    public function authenticated(Request $request, $admin)
+    {
+        session()->forget('admin_waiting_for_2af');
+        if ($admin->secret_totp) {
+            Auth::logout();
+            session()->put('admin_waiting_for_2af', $admin->id);
+            return redirect()->route('admin.login.2af');
+        }
+    }
+
+    public function showLoginForm2AF()
+    {
+        if (!session()->has('admin_waiting_for_2af')) {
+            return redirect()->route('admin.login');
+        }
+        return view('IpsumAdmin::auth.login_2af');
+    }
+
+    public function login2AF(Request $request, Admin $admin)
+    {
+        if (session()->get('admin_waiting_for_2af') != $admin->id) {
+            return redirect()->route('admin.login');
+        }
+
+        $otp = TOTP::create($admin->secret_totp);
+        if ($otp->verify($request->secret_temp)) {
+
+            Auth::login($admin, $request->remember);
+            session()->forget('admin_waiting_for_2af');
+            return redirect()->intended($this->redirectPath());
+        }
+
+        session()->flash('error', 'Code non valide');
+
+        return back();
     }
 
     protected function loggedOut(Request $request)

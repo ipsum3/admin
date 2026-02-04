@@ -8,6 +8,38 @@
         {{ Aire::select($options, $name, $label)->value( $value )->helpText((string) $description) }}
         @break
 
+    @case('select-multiple')
+        @php
+            $multipleName = $name . '[]';
+            $selectedValues = is_array($value) ? $value : ($value ? (array) $value : []);
+        @endphp
+
+        <div class="form-group">
+            <label for="{{ $name }}">{{ $label }}</label>
+
+            {{-- évite l'absence de clé si aucun choix --}}
+            <input type="hidden" name="{{ $multipleName }}" value=" ">
+
+            <select
+                    id="{{ $name }}"
+                    class="js-example-basic-single form-control"
+                    name="{{ $multipleName }}"
+                    multiple="multiple"
+            >
+                @foreach($options as $key => $option)
+                    <option value="{{ $key }}"
+                            {{ $key != '' && in_array($key, $selectedValues) ? 'selected' : '' }}>
+                        {{ $option }}
+                    </option>
+                @endforeach
+            </select>
+
+            @if($description)
+                <small class="form-text text-muted">{{ $description }}</small>
+            @endif
+        </div>
+        @break
+
     @case('radio')
         {{ Aire::radioGroup($options, $name, $label)->value( $value )->helpText((string) $description) }}
         @break
@@ -23,6 +55,44 @@
     @case('relation')
         {{ Aire::select($options, $name, $label)->value( $value )->helpText((string) $description) }}
         @break
+
+    @case('relation-multiple')
+        @php
+            $multipleName = $name . '[]';
+
+            // $value peut être une Collection, un tableau ou null
+            if ($value instanceof \Illuminate\Support\Collection) {
+                $selectedValues = $value->toArray();
+            } else {
+                $selectedValues = is_array($value) ? $value : [];
+            }
+        @endphp
+
+        <div class="form-group">
+            <label for="{{ $name }}">{{ $label }}</label>
+
+            <input type="hidden" name="{{ $multipleName }}" value=" ">
+
+            <select
+                    id="{{ $name }}"
+                    class="js-example-basic-single form-control"
+                    name="{{ $multipleName }}"
+                    multiple="multiple"
+            >
+                @foreach($options as $id => $labelOption)
+                    <option value="{{ $id }}"
+                            {{ $id != '' && in_array($id, $selectedValues) ? 'selected' : '' }}>
+                        {{ $labelOption }}
+                    </option>
+                @endforeach
+            </select>
+
+            @if($description)
+                <small class="form-text text-muted">{{ $description }}</small>
+            @endif
+        </div>
+        @break
+
 
     @case('repeater')
         @php

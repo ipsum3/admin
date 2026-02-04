@@ -59,7 +59,7 @@ class Custom extends Component
     {
         $options = $field['options'] ?? [];
 
-        if ($field['type'] === 'relation') {
+        if ($field['type'] === 'relation' || $field['type'] === 'relation-multiple') {
             $query = $field['model']::query();
             if (isset($field['filtre'])) {
                 foreach ($field['filtre'] as $filter) {

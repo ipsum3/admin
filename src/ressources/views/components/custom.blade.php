@@ -134,6 +134,100 @@
 
         @break
 
+    @case('table')
+        @php
+            $rawValue = old($name, $value);
+            if (is_string($rawValue)) {
+                $tableValue = json_decode($rawValue, true) ?? [];
+            } elseif (is_array($rawValue) || is_object($rawValue)) {
+                $tableValue = $rawValue;
+            }  elseif (is_object($rawValue)) {
+                $tableValue = $rawValue;
+            } else {
+                $tableValue = [];
+            }
+
+            $columns = $field['columns'] ?? [];
+            $tableKey = uniqid('table_');
+        @endphp
+
+        <div class="box" id="{{ $tableKey }}">
+            <div class="box-header">
+                <h2 class="box-title">
+                    {{ $label }}
+                    @if($description)
+                        <span class="text-muted">{{ $description }}</span>
+                    @endif
+                </h2>
+
+                <div class="btn-toolbar">
+                    <button class="btn btn-outline-secondary table-editable-add" data-target="tables_{{ $tableKey }}" id="tables_{{ $tableKey }}-add" type="button" data-toggle="tooltip" title="Ajouter" data-table="{{ $tableKey }}">
+                        <i class="fas fa-plus"></i> Ajouter une ligne
+                    </button>
+                </div>
+            </div>
+
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        @foreach($columns as $column)
+                            <th>{{ $column['label'] }}</th>
+                        @endforeach
+                        <th width="50"></th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="tables_{{ $tableKey }}-lignes" class="table-rows">
+                    @forelse($tableValue as $index => $row)
+                        <tr>
+                            @foreach($columns as $column)
+                                <td>
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            name="{{ $name }}[{{ $index }}][{{ $column['name'] }}]"
+                                            value="{{ $row->{$column['name']} ?? null }}"
+                                    >
+                                </td>
+                            @endforeach
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm remove-row">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            @foreach($columns as $column)
+                                <td>
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            name="{{ $name }}[0][{{ $column['name'] }}]"
+                                    >
+                                </td>
+                            @endforeach
+                                <td><button type="button" class="tables_{{ $tableKey }}-delete btn btn-outline-danger" data-confirm="false"><i class="fa fa-trash-alt"></i></button></td>
+                        </tr>
+                    @endforelse
+
+                        <script id="tables_{{ $tableKey }}-add-template" type="x-tmpl-mustache">
+                            <tr>
+                                @foreach($columns as $column)
+                                    <td>
+                                        <input type="text" class="form-control" name="{{ $name }}[@{{ indice }}][{{ $column['name'] }}]">
+                                    </td>
+                                @endforeach
+                                <td><button type="button" class="tables_{{ $tableKey }}-delete btn btn-outline-danger" data-confirm="false"><i class="fa fa-trash-alt"></i></button></td>
+                            </tr>
+                        </script>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @break
+
     @default
         {{ Aire::{$type}($name, $label)->value( $value )->helpText((string) $description) }}
 @endswitch

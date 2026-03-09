@@ -174,13 +174,13 @@
                         @foreach($columns as $column)
                             <th>{{ $column['label'] }}</th>
                         @endforeach
-                        <th width="50"></th>
+                        <th width="102px"></th>
                     </tr>
                     </thead>
 
-                    <tbody id="tables_{{ $tableKey }}-lignes" class="table-rows">
+                    <tbody id="tables_{{ $tableKey }}-lignes" class="table-rows sortable">
                     @forelse($tableValue as $index => $row)
-                        <tr>
+                        <tr class="sortable-item"  data-sortable="{{ $index }}">
                             @foreach($columns as $column)
                                 <td>
                                     <input
@@ -192,13 +192,12 @@
                                 </td>
                             @endforeach
                             <td>
-                                <button type="button" class="btn btn-danger btn-sm remove-row">
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                                <div class="btn sortable-move" data-toggle="tooltip" title="Trier"><span class="fa fa-arrows-alt"></span></div>
+                                <button type="button" class="tables_{{ $tableKey }}-delete btn btn-outline-danger" data-confirm="false"><i class="fa fa-trash-alt"></i></button>
                             </td>
                         </tr>
                     @empty
-                        <tr>
+                        <tr class="sortable-item" data-sortable="{{ $index }}">
                             @foreach($columns as $column)
                                 <td>
                                     <input
@@ -208,18 +207,24 @@
                                     >
                                 </td>
                             @endforeach
-                                <td><button type="button" class="tables_{{ $tableKey }}-delete btn btn-outline-danger" data-confirm="false"><i class="fa fa-trash-alt"></i></button></td>
+                            <td>
+                                <div class="btn sortable-move" data-toggle="tooltip" title="Trier"><span class="fa fa-arrows-alt"></span></div>
+                                <button type="button" class="tables_{{ $tableKey }}-delete btn btn-outline-danger" data-confirm="false"><i class="fa fa-trash-alt"></i></button>
+                            </td>
                         </tr>
                     @endforelse
 
                         <script id="tables_{{ $tableKey }}-add-template" type="x-tmpl-mustache">
-                            <tr>
+                            <tr class="sortable-item"  data-sortable="{{ $index }}">
                                 @foreach($columns as $column)
                                     <td>
                                         <input type="text" class="form-control" name="{{ $name }}[@{{ indice }}][{{ $column['name'] }}]">
                                     </td>
                                 @endforeach
-                                <td><button type="button" class="tables_{{ $tableKey }}-delete btn btn-outline-danger" data-confirm="false"><i class="fa fa-trash-alt"></i></button></td>
+                                <td>
+                                    <div class="btn sortable-move" data-toggle="tooltip" title="Trier"><span class="fa fa-arrows-alt"></span></div>
+                                    <button type="button" class="tables_{{ $tableKey }}-delete btn btn-outline-danger" data-confirm="false"><i class="fa fa-trash-alt"></i></button>
+                                </td>
                             </tr>
                         </script>
                     </tbody>

@@ -197,13 +197,14 @@
                             </td>
                         </tr>
                     @empty
-                        <tr class="sortable-item" data-sortable="{{ $index }}">
+                        <tr class="sortable-item" data-sortable="0">
                             @foreach($columns as $column)
                                 <td>
                                     <input
                                             type="text"
                                             class="form-control"
                                             name="{{ $name }}[0][{{ $column['name'] }}]"
+                                            value=""
                                     >
                                 </td>
                             @endforeach
@@ -214,21 +215,70 @@
                         </tr>
                     @endforelse
 
-                        <script id="tables_{{ $tableKey }}-add-template" type="x-tmpl-mustache">
-                            <tr class="sortable-item"  data-sortable="{{ $index }}">
-                                @foreach($columns as $column)
-                                    <td>
-                                        <input type="text" class="form-control" name="{{ $name }}[@{{ indice }}][{{ $column['name'] }}]">
-                                    </td>
-                                @endforeach
-                                <td>
-                                    <div class="btn sortable-move" data-toggle="tooltip" title="Trier"><span class="fa fa-arrows-alt"></span></div>
-                                    <button type="button" class="tables_{{ $tableKey }}-delete btn btn-outline-danger" data-confirm="false"><i class="fa fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                        </script>
+                    <script id="tables_{{ $tableKey }}-add-template" type="x-tmpl-mustache">
+                        <tr class="sortable-item" data-sortable="@{{ indice }}">
+                        @foreach($columns as $column)
+                            <td>
+                                <input type="text" class="form-control" name="{{ $name }}[@{{ indice }}][{{ $column['name'] }}]">
+                            </td>
+                        @endforeach
+                        <td>
+                            <div class="btn sortable-move" data-toggle="tooltip" title="Trier"><span class="fa fa-arrows-alt"></span></div>
+                            <button type="button" class="tables_{{ $tableKey }}-delete btn btn-outline-danger" data-confirm="false"><i class="fa fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    </script>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        @break
+
+    @case('media')
+        @php
+            $groupeMedia = $field['groupe'] ?? $name;
+            $modelParent = $article ?? $model ?? null;
+            $publicationId = ($modelParent && $modelParent->exists) ? $modelParent->id : '';
+            $publicationType = $modelParent ? get_class($modelParent) : \Ipsum\Article\app\Models\Article::class;
+            $repertoire = $field['repertoire'] ?? 'article';
+        @endphp
+
+        <div class="box">
+            <div class="box-header">
+                <h2 class="box-title">
+                    {{ $label }}
+                    @if($description)
+                        <span class="text-muted" style="font-size: 0.8rem; font-weight: normal;"> - {{ $description }}</span>
+                    @endif
+                </h2>
+            </div>
+            <div class="box-body">
+                <div class="upload"
+                     data-uploadendpoint="{{ route('admin.media.store') }}"
+                     data-uploadmedias="{{ route('admin.media.publication', ['publication_type' => $publicationType, 'publication_id' => $publicationId, 'groupe' => $groupeMedia]) }}"
+                     data-uploadrepertoire="{{ $repertoire }}"
+                     data-uploadpublicationid="{{ $publicationId }}"
+                     data-uploadpublicationtype="{{ $publicationType }}"
+                     data-uploadgroupe="{{ $groupeMedia }}"
+                     data-uploadnote="Images et documents, poids maximum {{ config('ipsum.media.upload_max_filesize') }} Ko"
+                     data-uploadmaxfilesize="{{ config('ipsum.media.upload_max_filesize') }}"
+                     data-uploadmmaxnumberoffiles="{{ $field['max_files'] ?? '' }}"
+                     data-uploadminnumberoffiles=""
+                     data-uploadallowedfiletypes="{{ $field['allowed_types'] ?? '' }}"
+                     data-uploadcsrftoken="{{ csrf_token() }}">
+
+                    <div class="upload-DragDrop"></div>
+                    <div class="upload-ProgressBar"></div>
+                    <div class="upload-alerts mt-3"></div>
+
+                    <div class="mt-3">
+                        <h3>Médias associés :</h3>
+                        <div class="d-flex flex-row flex-wrap sortable upload-files"
+                             data-sortableurl="{{ route('admin.media.changeOrder') }}"
+                             data-sortablecsrftoken="{{ csrf_token() }}">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         @break

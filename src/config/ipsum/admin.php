@@ -4,7 +4,7 @@ return [
 
     'route_prefix' => 'administration',
 
-    'favicon' => '/theme/images/icons/favicon.png',
+    'favicon' => null,
 
     'user_model' => Ipsum\Admin\app\Models\Admin::class,
 

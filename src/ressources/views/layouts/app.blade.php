@@ -14,7 +14,9 @@ auth()->user()->isSuperAdmin()
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title') - {{ __('IpsumAdmin::layout.Administration') }} - {{ config('settings.nom_site', 'Ipsum') }}</title>
-
+    @if(config('ipsum.admin.favicon'))
+        <link rel="shortcut icon" href="{{ config('ipsum.admin.favicon') }}" type="image/x-icon" />
+    @endif
     <!-- Optional CDN -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,700" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/solid.min.css" rel="stylesheet">

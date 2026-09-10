@@ -4,6 +4,8 @@ return [
 
     'route_prefix' => 'administration',
 
+    'favicon' => '/theme/images/icons/favicon.png',
+
     'user_model' => Ipsum\Admin\app\Models\Admin::class,
 
     'guard' => 'ipsumAdmin',

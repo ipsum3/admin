@@ -6,6 +6,8 @@ return [
 
     'user_model' => Ipsum\Admin\app\Models\Admin::class,
 
+    'favicon' => null,
+
     'guard' => 'ipsumAdmin',
 
     // The classes for the middleware to check if the visitor is an admin

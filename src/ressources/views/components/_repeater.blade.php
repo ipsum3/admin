@@ -2,7 +2,8 @@
     @foreach($field['fields'] as $k => $subField)
         @php
             $subFieldName = $name.'['.$i.'][' . $subField['name'] . ']';
-            $subFieldValue = old($subFieldName, $value[$group_key]->{$subField['name']} ?? '');
+            $dotName = preg_replace('/\[([^\]]*)\]/', '.$1', $name);
+            $subFieldValue = old($dotName.'.'.$i.'.'.$subField['name'], $value[$group_key]->{$subField['name']} ?? '');
         @endphp
         <x-admin::custom :field="$subField" :name="$subFieldName" :value="$subFieldValue" />
     @endforeach

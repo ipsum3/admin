@@ -113,7 +113,7 @@
             <div class="box-body">
                 <div id="fields-bloc-{{ $key }}" class="fields-bloc sortable">
                     @php
-                        $value = old($name, $value);
+                        // TODO bug old datas lorsqu'un repeater est supprimé ou ajouter. Revoir $i qui pose problème
                         $i = 0;
                     @endphp
                     @forelse ($value as $group_key => $group_value)

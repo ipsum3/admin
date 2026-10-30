@@ -159,12 +159,12 @@ return [
 		| See default-theme.php for a full example of configuring class names.
 		|
 		*/
-		'none' => [
+		'none' => [/* 
             'input' => '',
             'select' => '',
             'textarea' => '',
             'group_errors' => '',
-            'group_help_text' => '',
+            'group_help_text' => '', */
         ],
 		
 		/*
@@ -181,12 +181,12 @@ return [
 		|
 		*/
 		'valid' => [
-            'label' => '',
+            /* 'label' => '', */
             'input' => 'is-valid',
             'select' => 'is-valid',
             'textarea' => 'is-valid',
-            'group_errors' => '',
-            'group_help_text' => '',
+			/* 'group_errors' => '',
+			'group_help_text' => '', */
         ],
 		
 		/*
@@ -203,12 +203,12 @@ return [
 		|
 		*/
 		'invalid' => [
-            'label' => '',
+            /* 'label' => '', */
             'input' => 'is-invalid',
             'select' => 'is-invalid',
             'textarea' => 'is-invalid',
             'group_errors' => 'd-block',
-            'group_help_text' => '',
+            /* 'group_help_text' => '', */
         ],
 	],
 	

@@ -4,6 +4,7 @@ namespace Ipsum\Admin\app\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\Castable;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
 class AsCustomFieldsObject implements Castable
@@ -18,7 +19,7 @@ class AsCustomFieldsObject implements Castable
     {
         return new class implements CastsAttributes
         {
-            public function get($model, $key, $value, $attributes)
+            public function get(Model $model, string $key, mixed $value, array $attributes)
             {
 
                 // Dans le cas ou l'on fait un new Model()
@@ -31,7 +32,7 @@ class AsCustomFieldsObject implements Castable
                 return new CustomFields($data);
             }
 
-            public function set($model, $key, $value, $attributes)
+            public function set(Model $model, string $key, mixed $value, array $attributes)
             {
                 if (is_array($value)) {
                     // Suppression des champs vides
@@ -45,9 +46,10 @@ class AsCustomFieldsObject implements Castable
                 // Cas ou l'on modifie l'attribut custom fields via une porpriétée
                 if (is_object($value) and get_class($value) == CustomFields::class) {
                     $custom_fields = get_object_vars($value);
+
                     return json_encode($custom_fields['fields']);
                 }
-				
+
                 if (is_null($value)) {
                     return null;
                 }
@@ -55,7 +57,7 @@ class AsCustomFieldsObject implements Castable
                 throw new InvalidArgumentException('The given value is not a array');
             }
 
-            public function serialize($model, string $key, $value, array $attributes)
+            public function serialize(Model $model, string $key, mixed $value, array $attributes)
             {
                 return $value->getArrayCopy();
             }

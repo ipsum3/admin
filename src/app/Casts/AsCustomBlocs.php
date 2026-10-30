@@ -3,12 +3,12 @@
 namespace Ipsum\Admin\app\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use voku\helper\AntiXSS;
 
 class AsCustomBlocs implements CastsAttributes
 {
-    public function get($model, $key, $value, $attributes)
+    public function get(Model $model, string $key, mixed $value, array $attributes)
     {
 
         // Dans le cas où l'on fait un new Model()
@@ -26,7 +26,7 @@ class AsCustomBlocs implements CastsAttributes
         return $custom_blocs;
     }
 
-    public function set($model, $key, $value, $attributes)
+    public function set(Model $model, string $key, mixed $value, array $attributes)
     {
         return json_encode($value);
     }
@@ -36,8 +36,10 @@ class AsCustomBlocs implements CastsAttributes
         return $datas->map(function ($bloc, int $key) {
             if (is_array($bloc) && isset($bloc['fields']) && is_array($bloc['fields'])) {
                 $bloc['fields'] = new CustomFields($bloc['fields']);
+
                 return (object) $bloc;
             }
+
             return null;
         });
     }

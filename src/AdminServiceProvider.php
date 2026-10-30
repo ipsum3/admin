@@ -14,17 +14,10 @@ use Gate;
 class AdminServiceProvider extends ServiceProvider
 {
 
-    protected $commands = [
+    protected array $commands = [
         \Ipsum\Admin\app\Console\Commands\Install::class,
         \Ipsum\Admin\app\Console\Commands\CreateUser::class,
     ];
-
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = false;
 
     protected $policies = [
         Admin::class => AdminPolicy::class,
@@ -35,9 +28,9 @@ class AdminServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        //Schema::defaultStringLength(191); // Fix version de mysql
+        $this->registerAdminExceptionHandling();
 
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
@@ -61,30 +54,28 @@ class AdminServiceProvider extends ServiceProvider
     }
 
 
-    public function loadViews()
+    public function loadViews(): void
     {
         $this->loadViewsFrom( __DIR__.'/ressources/views', 'IpsumAdmin');
 
         $this->app['view']->prependNamespace('aire', __DIR__.'/ressources/views/vendor/aire');
 
         $this->loadViewsFrom(__DIR__.'/ressources/views/errors', 'errors');
-        // Overwrite ExceptionHandler for custom errors page
-        if (request()->is(config('ipsum.admin.route_prefix').'*')) {
-            $this->app->singleton(
-                \Illuminate\Contracts\Debug\ExceptionHandler::class,
-                Handler::class
-            );
-        }
         Blade::anonymousComponentNamespace('IpsumAdmin::components', 'admin-test'); // TODO voir si on peux garder anonymous
         Blade::componentNamespace('Ipsum\\Admin\\app\\View\\Components', 'admin');
     }
 
 
-    public function addPolicies()
+    protected function registerAdminExceptionHandling(): void
+    {
+        Handler::register($this->app->make(\Illuminate\Contracts\Debug\ExceptionHandler::class));
+    }
+
+    public function addPolicies(): void
     {
         $this->registerPolicies();
 
-        Gate::before(function ($user, $ability, $models) {
+        Gate::before(static function ($user, $ability, $models) {
             foreach ($models as $model) {
                 if (empty($model[0]) or $model[0] != config('ipsum.admin.user_model') or (is_object($model[0]) and get_class($model[0]) != config('ipsum.admin.user_model'))) {
                     return null;
@@ -94,24 +85,24 @@ class AdminServiceProvider extends ServiceProvider
                 return true;
             }
         });
-        Gate::define('show-logs', function ($user) {
+        Gate::define('show-logs', static function ($user) {
             return false;
         });
-        Gate::define('show-settings', function ($user) {
+        Gate::define('show-settings', static function ($user) {
             return true;
         });
-        Gate::define('admin-acces', function ($user, $acces) {
+        Gate::define('admin-acces', static function ($user, $acces) {
             return $user->hasAcces($acces);
         });
-        Gate::define('admin-role', function ($user, $role) {
+        Gate::define('admin-role', static function ($user, $role) {
             return $user->hasRole($role);
         });
-        Gate::define('super-admin-acces', function ($user) {
+        Gate::define('super-admin-acces', static function ($user) {
             return false;
         });
     }
 
-    public function addCustomConfigurationValues()
+    public function addCustomConfigurationValues(): void
     {
         // add filesystems.disks for the log viewer
         config([
@@ -123,37 +114,34 @@ class AdminServiceProvider extends ServiceProvider
 
     }
 
-    public function addCustomAuthConfigurationValues()
+    public function addCustomAuthConfigurationValues(): void
     {
         // add the ipsum admin guard to the configuration
-        app()->config['auth.guards'] = app()->config['auth.guards'] +
-            [
-                config('ipsum.admin.guard') => [
-                    'driver'   => 'session',
-                    'provider' => 'ipsumAdmin',
-                ],
-            ];
+        app()->config['auth.guards'] += [
+            config('ipsum.admin.guard') => [
+                'driver' => 'session',
+                'provider' => 'ipsumAdmin',
+            ],
+        ];
         // add the ipsum admin authentication provider to the configuration
-        app()->config['auth.providers'] = app()->config['auth.providers'] +
-            [
-                'ipsumAdmin' => [
-                    'driver'  => 'eloquent',
-                    'model'   => config('ipsum.admin.user_model'),
-                ],
-            ];
+        app()->config['auth.providers'] += [
+            'ipsumAdmin' => [
+                'driver' => 'eloquent',
+                'model' => config('ipsum.admin.user_model'),
+            ],
+        ];
         // add the ipsum admin password broker to the configuration
-        app()->config['auth.passwords'] = app()->config['auth.passwords'] +
-            [
-                'ipsumAdmin' => [
-                    'provider'  => 'ipsumAdmin',
-                    'table'     => 'password_resets',
-                    'expire'    => 60,
-                ],
-            ];
+        app()->config['auth.passwords'] += [
+            'ipsumAdmin' => [
+                'provider' => 'ipsumAdmin',
+                'table' => 'password_resets',
+                'expire' => 60,
+            ],
+        ];
 
     }
 
-    public function registerMiddlewareGroup(Router $router)
+    public function registerMiddlewareGroup(Router $router): void
     {
         $router->aliasMiddleware('adminAuth', \Ipsum\Admin\app\Http\Middleware\Authenticate::class);
         $router->aliasMiddleware('adminGuest', \Ipsum\Admin\app\Http\Middleware\RedirectIfAuthenticated::class);
@@ -163,7 +151,7 @@ class AdminServiceProvider extends ServiceProvider
         }
     }
 
-    public function publishFiles()
+    public function publishFiles(): void
     {
         $this->publishes([
             __DIR__.'/ressources/views' => resource_path('views/vendor/IpsumAdmin'),
@@ -186,7 +174,7 @@ class AdminServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
 
         $this->mergeConfigFrom(

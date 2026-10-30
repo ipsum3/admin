@@ -27,8 +27,8 @@
                         <tr>
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $file['file_name'] }}</td>
-                            <td>{{ \Carbon\Carbon::createFromTimeStamp($file['last_modified'])->formatLocalized('%d %B %Y') }}</td>
-                            <td>{{ \Carbon\Carbon::createFromTimeStamp($file['last_modified'])->formatLocalized('%H:%M') }}</td>
+                            <td>{{ \Carbon\Carbon::createFromTimestamp($file['last_modified'])->translatedFormat('d F Y') }}</td>
+                            <td>{{ \Carbon\Carbon::createFromTimestamp($file['last_modified'])->format('H:i') }}</td>
                             <td class="text-right">{{ round((int)$file['file_size']/1048576, 2).' MB' }}</td>
                             <td class="text-right">
                                 <form action="{{ route('admin.log.delete', encrypt($file['file_name'])) }}" method="POST">

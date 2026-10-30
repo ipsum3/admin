@@ -3,6 +3,7 @@
 namespace Ipsum\Admin\app\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Database\Eloquent\Model;
 
 class RenderCustomBlocs implements CastsAttributes
 {
@@ -16,7 +17,7 @@ class RenderCustomBlocs implements CastsAttributes
         $this->champ_custom_blocs = $champ_custom_blocs;
     }
 
-    public function get($model, $key, $value, $attributes)
+    public function get(Model $model, string $key, mixed $value, array $attributes)
     {
         if (! array_key_exists($this->champ_complementaire, $attributes) or ! array_key_exists($this->champ_custom_blocs, $attributes)) {
             return null;
@@ -36,7 +37,7 @@ class RenderCustomBlocs implements CastsAttributes
         return $output;
     }
 
-    public function set($model, $key, $value, $attributes)
+    public function set(Model $model, string $key, mixed $value, array $attributes)
     {
         return null;
     }
